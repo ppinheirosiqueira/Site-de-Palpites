@@ -3,15 +3,16 @@ from ..models import Palpite_Partida
 from futebol_manager.models import Partida
 from django.db.models import Q
 from django.db.models.functions import Lower
-from .score import check_pontuacao_pepe_jogo
+from .score import check_pontuacao_pepe_jogo, check_diferenca_gols_individual
 
 def palpite_da_partida(partida):
     palpites = Palpite_Partida.objects.filter(partida=partida).order_by(Lower("usuario__username"))
     resultados = []
+    diffs = []
     for palpite in palpites:
         resultados.append(check_pontuacao_pepe_jogo(palpite))
-    
-    return zip(palpites,resultados), len(palpites)
+        diffs.append(check_diferenca_gols_individual(palpite))
+    return zip(palpites, resultados, diffs), len(palpites)
 
 def get_anterior_proximo_partida(partida, variacao): # variacao, se = 0, normal, se > 0, é referente a time, se < 0, é referente ao campeonato
     if variacao == 0:

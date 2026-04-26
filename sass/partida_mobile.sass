@@ -97,12 +97,149 @@
                     text-decoration: none
                     color: var(--fc)
 
-            .resultado
+            .resultado-wrapper
                 position: absolute
                 bottom: -0.5em
-                font-size: 1em
+                display: flex
+                flex-direction: row
+                align-items: center
+                gap: 0
                 background-color: var(--bg)
-                padding: 0 0.5em
+                padding: 0 0.4em
+
+                .resultado
+                    font-size: 1em
+
+                .divisoria
+                    font-size: 0.9em
+                    opacity: 0.3
+                    margin: 0 0.3em
+
+                .diff
+                    font-size: 0.85em
+                    font-weight: 700
+                    opacity: 0.55
+
+    .palpites-header
+        display: flex
+        align-items: center
+        justify-content: space-between
+        padding: 0 0.5em
+
+    .toggle-wrapper
+        display: flex
+        align-items: center
+        gap: 8px
+        cursor: pointer
+
+    .toggle-label
+        font-size: 0.85rem
+        font-weight: 600
+        opacity: 0.7
+        user-select: none
+
+    .toggle-switch
+        position: relative
+        display: inline-block
+        width: 44px
+        height: 24px
+        cursor: pointer
+
+        input
+            display: none
+
+        .toggle-slider
+            position: absolute
+            inset: 0
+            background: var(--border)
+            border-radius: 24px
+            transition: background 0.25s
+
+            &::before
+                content: ""
+                position: absolute
+                width: 18px
+                height: 18px
+                left: 3px
+                top: 3px
+                background: var(--bg)
+                border-radius: 50%
+                transition: transform 0.25s
+
+        input:checked + .toggle-slider
+            background: var(--pontos-3)
+
+        input:checked + .toggle-slider::before
+            transform: translateX(20px)
+
+    .tabela-ranking
+        width: 100%
+        overflow-x: auto
+
+        table
+            width: 100%
+            border-collapse: collapse
+            font-size: 0.9rem
+
+        thead tr
+            border-bottom: 2px solid var(--border)
+
+        th
+            padding: 8px 10px
+            text-align: left
+            font-weight: 700
+            font-size: 0.75rem
+            text-transform: uppercase
+            letter-spacing: 0.06em
+            opacity: 0.6
+
+            &.th-pts, &.th-diff, &.th-pos
+                text-align: center
+
+        tbody tr
+            border-bottom: 1px solid var(--border)
+
+            &.row-green
+                border-left: 4px solid var(--pontos-3)
+
+            &.row-yellow
+                border-left: 4px solid var(--pontos-2)
+
+            &.row-orange
+                border-left: 4px solid var(--pontos-1)
+
+            &.row-red
+                border-left: 4px solid var(--pontos-0)
+
+        td
+            padding: 10px
+            vertical-align: middle
+            color: var(--fc)
+
+            a
+                color: var(--fc)
+                text-decoration: none
+
+            &.td-pos
+                text-align: center
+                font-weight: 700
+                opacity: 0.45
+                font-size: 0.85rem
+
+            &.td-pts
+                text-align: center
+                font-weight: 800
+                font-size: 1.1rem
+
+            &.td-diff
+                text-align: center
+                font-size: 0.9rem
+                opacity: 0.7
+
+    .sem-palpites
+        opacity: 0.6
+        font-style: italic
+        text-align: center
 
 body .palpites .jogos .red_border
     border: 2px solid var(--pontos-0)

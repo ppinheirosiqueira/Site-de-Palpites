@@ -1,12 +1,12 @@
 <div class="header">
     {% if anterior != None %}
-        <a href="{% url 'rodada' campeonato=anterior.edicao_campeonato.campeonato.id edicao=anterior.edicao_campeonato.id rodada=anterior.num %}"><button type="button" class="arrow-button left-arrow">&#8592;</button></a>
+        <a href="{% url 'rodada' campeonato=anterior.edicao_campeonato.campeonato.id edicao=edicao.num_edicao rodada=anterior.num %}"><button type="button" class="arrow-button left-arrow">&#8592;</button></a>
     {% else %}
         <span></span>
     {% endif %}
-        <h2><a href="{% url 'edicao' campeonato=rodada.edicao_campeonato.campeonato.id edicao=rodada.edicao_campeonato.id %}">{{ rodada.edicao_campeonato }}</a> - {{ rodada.nome }}</h2>
+        <h2><a href="{% url 'edicao' campeonato=rodada.edicao_campeonato.campeonato.id edicao=edicao.num_edicao %}">{{ rodada.edicao_campeonato }}</a> - {{ rodada.nome }}</h2>
     {% if proxima != None %}
-        <a href="{% url 'rodada' campeonato=proxima.edicao_campeonato.campeonato.id edicao=proxima.edicao_campeonato.id rodada=proxima.num %}"><button type="button" class="arrow-button right-arrow">&#8594;</button></a>
+        <a href="{% url 'rodada' campeonato=proxima.edicao_campeonato.campeonato.id edicao=edicao.num_edicao rodada=proxima.num %}"><button type="button" class="arrow-button right-arrow">&#8594;</button></a>
     {% else %}
         <span></span>
     {% endif %}   

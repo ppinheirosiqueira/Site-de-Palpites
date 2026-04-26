@@ -22,7 +22,7 @@ def get_edicoes() -> list:
 def get_edicoes_usuario(id:int) -> list:
     palpites = Palpite_Partida.objects.filter(usuario=id)
     edicoes = palpites.values_list("partida__Rodada__edicao_campeonato",flat=True).distinct()
-    return EdicaoCampeonato.objects.filter(id__in=edicoes)
+    return EdicaoCampeonato.objects.filter(id__in=edicoes).order_by("campeonato","num_edicao")
 
 def cravadas(edicao,grupo):
     palpites = Palpite_Partida.objects.filter(partida__Rodada__edicao_campeonato__id=edicao)

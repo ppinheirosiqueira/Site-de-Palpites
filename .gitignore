@@ -1,1 +1,3 @@
 auxiliares/arquivosJson/*
+.venv/
+venv/

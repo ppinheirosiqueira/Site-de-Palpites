@@ -41,3 +41,11 @@ def check_diferenca_gols(palpites):
     )['pontuacao_total']
 
     return pontuacao_usuario or 0
+
+def check_diferenca_gols_individual(palpite):
+    """Retorna a diferença de gols de um único palpite em relação ao resultado real."""
+    if palpite.partida.golsMandante == -1:
+        return None
+    diff_mandante = abs(palpite.golsMandante - palpite.partida.golsMandante)
+    diff_visitante = abs(palpite.golsVisitante - palpite.partida.golsVisitante)
+    return diff_mandante + diff_visitante

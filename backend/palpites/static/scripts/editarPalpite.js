@@ -6,9 +6,25 @@ function showPalpite(){
     };
 }
 
-function showResultado(){
-    const resultado = document.getElementById("resultado")
+function showResultado(btn) {
+    const resultado = document.getElementById("resultado");
     resultado.style.display = "flex";
+
+    const golsMandante = btn.dataset.golsMandante;
+    const golsVisitante = btn.dataset.golsVisitante;
+    if (golsMandante !== "-1") {
+        document.getElementById("golsMandante").value = golsMandante;
+    }
+    else{
+        document.getElementById("golsMandante").value = 0;
+    }
+    if (golsVisitante !== "-1") {
+        document.getElementById("golsVisitante").value = golsVisitante;
+    }   
+    else{
+        document.getElementById("golsVisitante").value = 0;
+    }
+
     document.querySelector(".fechar").onclick = function() {
         resultado.style.display = "none";
     };

@@ -1,23 +1,58 @@
 <div class="palpites">
     {% if tamanho_palpites > 0 %}
         <h1>Palpites</h1>
-        <div class="jogos">
-            {% for palpite, resultado in palpites %}
-                <div class="{% if resultado == 0 %}red_border{% elif resultado == 1 %}orange_border{% elif resultado == 2 %}yellow_border{% elif resultado == 3 %}green_border{% endif %} jogo">
-                    <div class="player"><a href="{%  url 'userView' id=palpite.usuario.id %}">{{ palpite.usuario }}</a></div>
+        {% if jogoComecou %}
+            <div class="toggle-wrapper" title="Alternar modo de exibição">
+                <span class="toggle-label">Ranking</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggleRanking">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        {% endif %}
+        <div class="jogos" id="modoNormal">
+            {% for palpite, resultado, diff in palpites %}
+                <div class="{% if resultado == 0 %}red_border{% elif resultado == 1 %}orange_border{% elif resultado == 2 %}yellow_border{% elif resultado == 3 %}green_border{% endif %} jogo"
+                     data-pontos="{{ resultado }}"
+                     data-diff="{% if diff != None %}{{ diff }}{% else %}9999{% endif %}">
+                    <div class="player">
+                        <a href="{% url 'userView' id=palpite.usuario.id %}">{{ palpite.usuario }}</a>
+                    </div>
                     <a href="{% url 'show_team' id=partida.Mandante.id %}">
                         <img class="escudo" src="/{{ partida.Mandante.escudo }}" alt="escudo mandante">
                     </a>
                     <span class="texto">{{ palpite.golsMandante }}</span>
                     <span class="texto">X</span>
                     <span class="texto">{{ palpite.golsVisitante }}</span>
-                    <a href="{% url 'show_team' id=partida.Visitante.id %}">    
+                    <a href="{% url 'show_team' id=partida.Visitante.id %}">
                         <img class="escudo" src="/{{ partida.Visitante.escudo }}" alt="escudo visitante">
                     </a>
-                    <div class="resultado">{{  resultado }}</div>
+                    <div class="resultado-wrapper">
+                        <div class="resultado">{{ resultado }}</div>
+                        {% if jogoComecou and diff != None %}
+                            <span class="divisoria">|</span>
+                            <div class="diff">Δ{{ diff }}</div>
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         </div>
+        {% if jogoComecou %}
+            <div class="tabela-ranking" id="modoRanking" style="display:none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="th-pos">#</th>
+                            <th class="th-nome">Jogador</th>
+                            <th class="th-pts">Pts</th>
+                            <th class="th-diff">Δ Gols</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingBody">
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     {% else %}
         Não houve palpites dessa partida
     {% endif %}
