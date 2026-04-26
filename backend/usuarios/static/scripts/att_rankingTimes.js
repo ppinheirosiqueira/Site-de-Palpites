@@ -40,7 +40,7 @@ function cabecalho(){
     return `<thead>
             <tr>
                 <th>Time</th>
-                <th>% Pepe</th>
+                <th>% Aproveitamento</th>
                 <th>Média Dif. Gols</th>
                 <th>Número de Jogos Palpitados</th>
             </tr>

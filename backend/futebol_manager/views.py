@@ -124,10 +124,10 @@ def verEdicaoCampeonato(request : HttpRequest, campeonato : int, edicao : int) -
         if rankingJogadores is not None:
             rankingJogadores = list(rankingJogadores)
 
-    campeaoPepe = None
+    campeao = None
     if edicao.terminou:
-        topPepe = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
-        campeaoPepe = [{'id': usuario[0],'imagem': User.objects.get(id=usuario[0]).profile_image, 'pontos': usuario[1]} for usuario in topPepe]
+        top_pontuacao = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
+        campeao = [{'id': usuario[0],'imagem': User.objects.get(id=usuario[0]).profile_image, 'pontos': usuario[1]} for usuario in top_pontuacao]
     
     if edicao.campeonato.pontosCorridos:
         paginator = Paginator(Partida.objects.filter(Rodada__edicao_campeonato=edicao).order_by('Rodada'), 10)
@@ -147,7 +147,7 @@ def verEdicaoCampeonato(request : HttpRequest, campeonato : int, edicao : int) -
     contexto = {
         'edicao': edicao,
         'rodadas': Rodada.objects.filter(edicao_campeonato=edicao).order_by("num"),
-        'campeaoPepe': campeaoPepe,
+        'campeao': campeao,
         'ranking': rankingJogadores,
         "page": page,
         "edicoes": edicoes,
@@ -288,9 +288,9 @@ def finalizarCampeonato(request: HttpRequest, edicao:int) -> HttpRequest:
     if rankingJogadores is not None:
         rankingJogadores = list(rankingJogadores)
 
-    topPepe = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
+    top_pontuacao = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
     
-    for i, jogador in enumerate(topPepe,1):
+    for i, jogador in enumerate(top_pontuacao,1):
         aux = Medal(usuario = User.objects.get(id=jogador[0]), edicao_campeonato = campeonato, nivel = i)
         aux.save()
     

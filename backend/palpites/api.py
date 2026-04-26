@@ -6,7 +6,7 @@ from django.core import serializers
 from django.core.paginator import Paginator
 
 from futebol_manager.utils import partida_to_json, definirVencedor
-from .utils import ranking, rankingClassicacao, check_pontuacao_pepe, palpites_campeonato_to_json, cravadas, avgPontos, modaPalpites
+from .utils import ranking, rankingClassicacao, check_pontuacao, palpites_campeonato_to_json, cravadas, avgPontos, modaPalpites
 
 from futebol_manager.models import Time, Partida, EdicaoCampeonato, Rodada
 from usuarios.models import User, Grupo
@@ -136,7 +136,7 @@ def attGrafico(request : HttpRequest, usuarios : str, campeonato : int, rod_Ini 
     }
 
     for username in usernames:
-        pontosP = [check_pontuacao_pepe(palpites.filter(partida__Rodada__num=rodada, usuario__username=username)) for rodada in rodadas]
+        pontosP = [check_pontuacao(palpites.filter(partida__Rodada__num=rodada, usuario__username=username)) for rodada in rodadas]
         aux = {
             "label": username,
             "data": pontosP,
@@ -160,7 +160,7 @@ def attGraficoGrupo(request : HttpRequest, idGrupo : int, rod_Ini : int, rod_Fin
         "datasets":[]
     }
     for username in usernames:
-        pontosP = [check_pontuacao_pepe(palpites.filter(partida__Rodada__num=rodada, usuario__username=username)) for rodada in rodadas]
+        pontosP = [check_pontuacao(palpites.filter(partida__Rodada__num=rodada, usuario__username=username)) for rodada in rodadas]
         aux = {
             "label": username,
             "data": pontosP,

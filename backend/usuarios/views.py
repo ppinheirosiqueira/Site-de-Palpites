@@ -15,7 +15,7 @@ from futebol_manager.models import Time, EdicaoCampeonato, Rodada
 from palpites.models import Palpite_Partida, Palpite_Campeonato, Medal
 from .models import User, Grupo, RodadaModificada
 
-from palpites.utils import accuracy_user, get_edicoes_usuario, rankingTimesNoPerfil, average_pepe, rankingGrupo, cravadas
+from palpites.utils import accuracy_user, get_edicoes_usuario, rankingTimesNoPerfil, pontuacao_media, rankingGrupo, cravadas
 
 # Views de Administração de Usuario
 def verLogin(request : HttpRequest) -> HttpResponse:
@@ -89,7 +89,7 @@ def verUsuario(request : HttpRequest, id : int) -> HttpResponse:
     contexto = {
         "title": f"Perfil do Usuário - {usuario.username}",
         "usuario": usuario,
-        "average_points_pepe": average_pepe(id),
+        "pontuacao_media": pontuacao_media(id),
         "total_predictions": len(Palpite_Partida.objects.filter(usuario=id)),
         "accuracy_goals_mandante": aGm,
         "accuracy_goals_visitante": aGv,
@@ -143,10 +143,10 @@ def verGrupo(request: HttpRequest, id:int) -> HttpResponse:
         rankingJogadores = None
 
     if grupo.edicao.terminou:
-        topPepe = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
-        campeaoPepe = [{'id': usuario[0],'imagem': User.objects.get(id=usuario[0]).profile_image, 'pontos': usuario[1]} for usuario in topPepe]
+        top_pontuacao = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
+        campeao = [{'id': usuario[0],'imagem': User.objects.get(id=usuario[0]).profile_image, 'pontos': usuario[1]} for usuario in top_pontuacao]
     else:
-        campeaoPepe = None
+        campeao = None
 
     temPalpite = False
     
@@ -163,7 +163,7 @@ def verGrupo(request: HttpRequest, id:int) -> HttpResponse:
         'ranking': rankingJogadores,
         'temPalpite': temPalpite,
         'cravadas': cravadasJogadores,
-        'campeaoPepe': campeaoPepe,
+        'campeao': campeao,
         'rodadas': rodadas,
         'rodadasModificadas': RodadaModificada.objects.filter(rodada__in=rodadas),
         'userList': json.dumps(list(User.objects.all().exclude(id__in=grupo.usuarios.all()).values_list("username",flat=True))),

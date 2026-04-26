@@ -1,6 +1,6 @@
 from ..models import Palpite_Partida
 from futebol_manager.models import Time
-from .score import check_pontuacao_pepe, check_diferenca_gols
+from .score import check_pontuacao, check_diferenca_gols
 from django.db.models import F, Q
 
 def accuracy_user(id_usuario):
@@ -17,11 +17,11 @@ def accuracy_user(id_usuario):
     ).count() / len(palpites)    
     return aGm, aGv, aR, aT
 
-def average_pepe(id_usuario):
+def pontuacao_media(id_usuario):
     palpites = Palpite_Partida.objects.filter(usuario=id_usuario).exclude(partida__golsMandante=-1, partida__golsVisitante=-1)
     if len(palpites) == 0:
         return 0
-    soma = check_pontuacao_pepe(palpites)
+    soma = check_pontuacao(palpites)
     return soma/(len(palpites))
 
 def rankingTimesNoPerfil(id:int,edicao:int):
@@ -40,7 +40,7 @@ def rankingTimesNoPerfil(id:int,edicao:int):
         palpites_time = palpites.filter(
             Q(partida__Mandante=time) | Q(partida__Visitante=time)
         )
-        pontuacaoP = check_pontuacao_pepe(palpites_time)
+        pontuacaoP = check_pontuacao(palpites_time)
         total = 3*palpites_time.count()
         porcentagemP.append(100*pontuacaoP/total)
         difGols.append(check_diferenca_gols(palpites_time)/palpites_time.count())

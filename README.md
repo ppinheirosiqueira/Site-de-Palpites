@@ -13,7 +13,7 @@ Este projeto consiste em uma aplicação web que permite que usuários possam pa
 
 Existe um padrão de pontuação nessa implementação:
 
-* Padrão Pepe
+* Padrão de pontuação
     * 1 ponto por acertar quem venceria/empate
     * 1 ponto por acertar gols do time mandante
     * 1 ponto por acertar gols do time visitante

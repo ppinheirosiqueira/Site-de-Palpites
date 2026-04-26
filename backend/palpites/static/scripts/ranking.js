@@ -62,7 +62,7 @@ function cabecalho(){
         <tr>
             <th>Posição</th>
             <th>Usuário</th>
-            <th>Pontuação Pepe</th>
+            <th>Pontuação</th>
             <th>Dif. Gols</th>
         </tr>
     </thead>

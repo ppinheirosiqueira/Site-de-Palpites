@@ -37,17 +37,17 @@
         {% if grupo.edicao.terminou %}
             <div class="podium">
                 <div class="tituloPodio"><h1>Campeão</h1></div>
-                {% if campeaoPepe.0 %}
-                    <a class="imagem1" href="{%  url 'userView' id=campeaoPepe.0.id %}"><img src="/media/{{ campeaoPepe.0.imagem }}" alt="Primeiro Lugar"></a>
-                    <div class="first-place">{{ campeaoPepe.0.pontos }}</div>
+                {% if campeao.0 %}
+                    <a class="imagem1" href="{%  url 'userView' id=campeao.0.id %}"><img src="/media/{{ campeao.0.imagem }}" alt="Primeiro Lugar"></a>
+                    <div class="first-place">{{ campeao.0.pontos }}</div>
                 {% endif %}
-                {% if campeaoPepe.1 %}
-                    <a class="imagem2" href="{%  url 'userView' id=campeaoPepe.1.id %}"><img src="/media/{{ campeaoPepe.1.imagem }}" alt="Segundo Lugar"></a>
-                    <div class="second-place">{{ campeaoPepe.1.pontos }}</div>
+                {% if campeao.1 %}
+                    <a class="imagem2" href="{%  url 'userView' id=campeao.1.id %}"><img src="/media/{{ campeao.1.imagem }}" alt="Segundo Lugar"></a>
+                    <div class="second-place">{{ campeao.1.pontos }}</div>
                 {% endif %}
-                {% if campeaoPepe.2 %}
-                    <a class="imagem3" href="{%  url 'userView' id=campeaoPepe.2.id %}"><img src="/media/{{ campeaoPepe.2.imagem }}" alt="Terceiro Lugar"></a>
-                    <div class="third-place">{{ campeaoPepe.2.pontos }}</div>
+                {% if campeao.2 %}
+                    <a class="imagem3" href="{%  url 'userView' id=campeao.2.id %}"><img src="/media/{{ campeao.2.imagem }}" alt="Terceiro Lugar"></a>
+                    <div class="third-place">{{ campeao.2.pontos }}</div>
                 {% endif %}
             </div>
         {% endif %}
@@ -205,17 +205,17 @@
         <div id="destaque" class="divConteudo" data-display="block">
             <div class="podium">
                 <div class="tituloPodio"><h1>Campeão</h1></div>
-                {% if campeaoPepe.0 %}
-                    <a class="imagem1" href="{%  url 'userView' id=campeaoPepe.0.id %}"><img src="/media/{{ campeaoPepe.0.imagem }}" alt="Primeiro Lugar"></a>
-                    <div class="first-place">{{ campeaoPepe.0.pontos }}</div>
+                {% if campeao.0 %}
+                    <a class="imagem1" href="{%  url 'userView' id=campeao.0.id %}"><img src="/media/{{ campeao.0.imagem }}" alt="Primeiro Lugar"></a>
+                    <div class="first-place">{{ campeao.0.pontos }}</div>
                 {% endif %}
-                {% if campeaoPepe.1 %}
-                    <a class="imagem2" href="{%  url 'userView' id=campeaoPepe.1.id %}"><img src="/media/{{ campeaoPepe.1.imagem }}" alt="Segundo Lugar"></a>
-                    <div class="second-place">{{ campeaoPepe.1.pontos }}</div>
+                {% if campeao.1 %}
+                    <a class="imagem2" href="{%  url 'userView' id=campeao.1.id %}"><img src="/media/{{ campeao.1.imagem }}" alt="Segundo Lugar"></a>
+                    <div class="second-place">{{ campeao.1.pontos }}</div>
                 {% endif %}
-                {% if campeaoPepe.2 %}
-                    <a class="imagem3" href="{%  url 'userView' id=campeaoPepe.2.id %}"><img src="/media/{{ campeaoPepe.2.imagem }}" alt="Terceiro Lugar"></a>
-                    <div class="third-place">{{ campeaoPepe.2.pontos }}</div>
+                {% if campeao.2 %}
+                    <a class="imagem3" href="{%  url 'userView' id=campeao.2.id %}"><img src="/media/{{ campeao.2.imagem }}" alt="Terceiro Lugar"></a>
+                    <div class="third-place">{{ campeao.2.pontos }}</div>
                 {% endif %}
             </div>
         </div>

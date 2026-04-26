@@ -7,7 +7,7 @@
         <div class="user-info">
             <h2>{{ usuario.username }}</h2>
             <p>Time Favorito: {{ usuario.favorite_team.Nome }}</p>
-            <p>Média de Pontos Pepe: {{ average_points_pepe|floatformat:2 }}</p>
+            <p>Média de Pontos: {{ pontuacao_media|floatformat:2 }}</p>
             <p>Jogos Palpitados: {{ total_predictions }}</p>
             <p>% de Acerto do Resultado: {{ accuracy_result|floatformat:2 }}%</p>
             <p>% de Acerto dos Gols do Mandante: {{ accuracy_goals_mandante|floatformat:2 }}%</p>
@@ -49,7 +49,7 @@
             <thead>
                 <tr>
                     <th>Time</th>
-                    <th>% Pepe</th>
+                    <th>% Aproveitamento</th>
                     <th>Média Dif. Gols</th>
                     <th>Número de Jogos Palpitados</th>
                 </tr>

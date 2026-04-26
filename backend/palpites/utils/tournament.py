@@ -4,10 +4,10 @@ from django.db.models import F, Count
 
 from futebol_manager.utils import auxRankingClassificacao
 
-from .score import check_pontuacao_pepe, check_diferenca_gols
+from .score import check_pontuacao, check_diferenca_gols
 
 from usuarios.models import User, Grupo
-from futebol_manager.models import Partida, EdicaoCampeonato
+from futebol_manager.models import EdicaoCampeonato
 from ..models import Palpite_Partida, Palpite_Campeonato
 
 def get_edicoes_usuario(id:int) -> list:
@@ -94,7 +94,7 @@ def avgPontos(edicao, grupo):
     pessoas = list(User.objects.order_by('id').filter(id__in=palpites.values_list("usuario", flat=True).distinct()))
     usernames = [pessoa.username for pessoa in pessoas]
     ids = [pessoa.id for pessoa in pessoas]
-    pontosP = [check_pontuacao_pepe(palpites.filter(usuario=pessoa))/palpites.filter(usuario=pessoa).count() for pessoa in ids]
+    pontosP = [check_pontuacao(palpites.filter(usuario=pessoa))/palpites.filter(usuario=pessoa).count() for pessoa in ids]
     difGols = [check_diferenca_gols(palpites.filter(usuario=pessoa))/palpites.filter(usuario=pessoa).count() for pessoa in ids]
 
     if (len(usernames) == 0):
