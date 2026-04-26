@@ -60,8 +60,8 @@ def verPagPalpitar(request : HttpRequest) -> HttpResponse:
                     aux.golsVisitante = int(value)
                     aux.vencedor = definirVencedor(aux.golsMandante,aux.golsVisitante)
                     aux.save()
-    faltantes = Partida.objects.filter(dia__gt=timezone.now())
-    feitas = Palpite_Partida.objects.filter(usuario=request.user.id, partida__dia__gt=timezone.now())
+    faltantes = Partida.objects.filter(dia__gt=timezone.now()).order_by('dia')
+    feitas = Palpite_Partida.objects.filter(usuario=request.user.id, partida__dia__gt=timezone.now()).order_by('partida__dia')
     for palpite in feitas:
         if palpite.partida in faltantes:
             faltantes = faltantes.exclude(id=palpite.partida.id)
