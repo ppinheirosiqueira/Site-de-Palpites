@@ -1,0 +1,23 @@
+{% extends "palpites/layout.html" %}
+{% load static %}
+{% load user_agents %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block style %}
+    {% if request|is_pc %}
+        <link rel="stylesheet" href="{% static 'styles/registrar_time_pc.css' %}?v=1.2">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'styles/registrar_time_mobile.css' %}?v=1.2">
+    {% endif %}
+{% endblock %}
+
+{% block bodyPC %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_time_registro.html" %}
+{% endblock %}
+
+{% block bodyMobile %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_time_registro.html" %}
+{% endblock %}

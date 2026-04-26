@@ -1,14 +1,7 @@
-# from ..models import Palpite_Partida, Time
 from ..models import Palpite_Partida
 from futebol_manager.models import Time
 from .score import check_pontuacao_pepe, check_diferenca_gols
 from django.db.models import F, Q
-
-def get_tema(user):
-    if user.is_authenticated:
-        return user.colors()
-    else:
-        return None
 
 def accuracy_user(id_usuario):
     palpites = Palpite_Partida.objects.filter(usuario=id_usuario).exclude(partida__golsMandante=-1, partida__golsVisitante=-1)

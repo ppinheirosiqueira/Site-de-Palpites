@@ -25,4 +25,7 @@ handler500 = 'palpites.views.pagina_500'
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
     path('', include("palpites.urls")),
+    path('', include("avisos.urls")),
+    path('', include("usuarios.urls")),
+    path('', include("futebol_manager.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

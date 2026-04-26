@@ -1,0 +1,23 @@
+{% extends "palpites/layout.html" %}
+{% load static %}
+{% load user_agents %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block style %}
+    {% if request|is_pc %}
+        <link rel="stylesheet" href="{% static 'styles/login_pc.css' %}?v=1.0">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'styles/login_mobile.css' %}?v=1.0">
+    {% endif %}
+{% endblock %}
+
+{% block bodyPC %}
+    {% include "usuarios/blocos_auxiliares/auxiliar_register.html" %}
+{% endblock %}
+
+{% block bodyMobile %}
+    {% include "usuarios/blocos_auxiliares/auxiliar_register.html" %}
+{% endblock %}

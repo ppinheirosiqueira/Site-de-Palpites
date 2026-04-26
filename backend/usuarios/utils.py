@@ -1,5 +1,6 @@
 import random
 import colorsys
+
 def gerar_cor_clara():
     # Gerar um valor de cor aleatório em tons claros
     # Você pode ajustar os valores de mínimo e máximo para controlar a gama de cores claras geradas
@@ -14,3 +15,16 @@ def gerar_cor_clara():
     cor_hex = "#{:02x}{:02x}{:02x}".format(int(r * 255), int(g * 255), int(b * 255))
 
     return cor_hex
+
+def modificador_to_json(modificador):
+    return {
+        'id': modificador.id,
+        'nome': modificador.rodada.nome,
+        'modificador': modificador.modificador,
+    }
+
+def get_tema(user):
+    if user.is_authenticated:
+        return user.colors()
+    else:
+        return None

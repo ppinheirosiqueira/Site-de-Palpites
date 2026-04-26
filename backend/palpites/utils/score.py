@@ -1,5 +1,4 @@
 from django.db.models import F, Func, Sum
-# from ..models import Rodada, RodadaModificada
 from futebol_manager.models import Rodada
 from usuarios.models import RodadaModificada
 

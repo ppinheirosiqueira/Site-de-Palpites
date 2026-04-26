@@ -1,0 +1,19 @@
+{% extends "palpites/layout.html" %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'styles/campeonato.css' %}?v=1.0">
+    <script type="text/javascript" src="{% static 'scripts/selecionarCampeonato.js' %}?v=1.0"></script>
+{% endblock %}
+
+{% block bodyPC %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_campeonatos.html" %}
+{% endblock %}
+
+{% block bodyMobile %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_campeonatos.html" %}
+{% endblock %}

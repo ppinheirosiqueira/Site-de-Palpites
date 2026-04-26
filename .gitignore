@@ -1,3 +1,4 @@
 auxiliares/arquivosJson/*
 .venv/
 venv/
+*.css.map

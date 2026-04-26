@@ -1,0 +1,18 @@
+{% extends "palpites/layout.html" %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'styles/times.css' %}?v=1.0">
+{% endblock %}
+
+{% block bodyPC %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_times.html" %}
+{% endblock %}
+
+{% block bodyMobile %}
+    {% include "futebol_manager/blocos_auxiliares/auxiliar_times.html" %}
+{% endblock %}
