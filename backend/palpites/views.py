@@ -30,9 +30,11 @@ def home(request : HttpRequest) -> HttpResponse:
     contexto = {
             "title": "Pepe League",
             "page": page,
-            "ranking": ranking(edicoes[0].id,0),
+            "ranking": ranking(edicoes[0].id,0,0),
             "edicoes": edicoes,
             "rodadas": rodadas,
+            "primeira_rodada": rodadas[0],
+            "ultima_rodada": rodadas[-1]
         }
 
     user_agent = parse(request.META.get('HTTP_USER_AGENT', ''))

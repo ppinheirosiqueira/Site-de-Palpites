@@ -89,8 +89,8 @@ def get_partidas(request : HttpRequest, pagina : int) -> JsonResponse:
     
     return JsonResponse(data)
 
-def get_ranking(request : HttpRequest, edicao : int, rodada : int) -> JsonResponse:
-    rankingPreenchido = ranking(edicao, rodada)
+def get_ranking(request : HttpRequest, edicao : int, rodadaInicial : int, rodadaFinal : int) -> JsonResponse:
+    rankingPreenchido = ranking(edicao, int(rodadaInicial), int(rodadaFinal))
     try:
         data_list = [dict(zip(('posicao', 'usernames', 'ids', 'pontosP', 'difGols'), values)) for values in rankingPreenchido]
         json_string = dumps(data_list)

@@ -12,6 +12,7 @@
     <script type="text/javascript" src="{% static 'scripts/jogos.js' %}?v=1.0"></script>
     <script>
         var isPc = "{{ request|is_pc }}"
+        var nomesRodadas = ["Todas", {% for rodada in rodadas %}"{{ rodada.nome }}"{% if not forloop.last %},{% endif %}{% endfor %}];
     </script>
     {% if request|is_pc %}
         <link rel="stylesheet" href="{% static 'styles/home_pc.css' %}?v=1.1">

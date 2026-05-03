@@ -6,15 +6,37 @@
             {% for edicao in edicoes %}
                 <option value="{{edicao.id}}">{{ edicao }}</option>
             {% endfor %}
-            <option value="0">Todos</option>
         </select>
-        <label for="rodada">Rodada: </label>
-        <select name="rodada" id="rodada" class="select">
-            <option value="0">Todas</option>
-            {% for rodada in rodadas %}
-                <option value="{{ rodada.num }}">{{ rodada.nome }}</option>
-            {% endfor %}
-        </select>
+        <div class="filtro-rodada">
+            <label>Rodada: </label>
+            <div class="select-rodada-wrapper">
+                <select name="rodada" id="rodada" class="select">
+                    <option value="0">Todas</option>
+                    {% for rodada in rodadas %}
+                        <option value="{{ rodada.num }}">{{ rodada.nome }}</option>
+                    {% endfor %}
+                </select>
+                <div class="faixa-wrapper" id="faixaWrapper" style="display:none;">
+                    <div class="slider-duplo">
+                        <div class="slider-labels">
+                            <span id="labelMin">{{ primeira_rodada.nome }}</span>
+                            <span id="labelMax">{{ ultima_rodada.nome }}</span>
+                        </div>
+                        <div class="slider-track">
+                            <div class="slider-trilha-bg"></div>
+                            <div class="slider-trilha-ativa" id="sliderTrilha"></div>
+                            <input type="range" id="sliderMin" min="{{ primeira_rodada.num }}" max="{{ ultima_rodada.num }}" value="{{ primeira_rodada.num }}">
+                            <input type="range" id="sliderMax" min="{{ primeira_rodada.num }}" max="{{ ultima_rodada.num }}" value="{{ ultima_rodada.num }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label class="toggle-faixa">
+                <input type="checkbox" id="checkFaixa">
+                <span class="toggle-slider"></span>
+                Faixa
+            </label>
+        </div>
     </div>
     <table class="ranking">
         {% if ranking is not null %}

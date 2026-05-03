@@ -22,7 +22,7 @@ urlpatterns = [
 # =============================================== URL de APIs =========================================================
 # =====================================================================================================================
     # ============== Home ==============
-    path("ranking/<int:edicao>/<int:rodada>", api.get_ranking, name="ranking"),
+    path("ranking/<edicao>/<rodadaInicial>/<rodadaFinal>", api.get_ranking, name="ranking"),
     path("attPagina/<int:pagina>", api.get_partidas, name="att_paginas"),
     # ============== Home - Gráfico ==============
     path("attGrafico/<str:usuarios>/<int:campeonato>/<int:rod_Ini>/<int:rod_Fin>", api.attGrafico, name="attGrafico"),

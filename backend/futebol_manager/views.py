@@ -120,7 +120,7 @@ def verEdicaoCampeonato(request : HttpRequest, campeonato : int, edicao : int) -
 
     rankingJogadores = None
     if edicao.comecou:
-        rankingJogadores = ranking(edicao.id,0)
+        rankingJogadores = ranking(edicao.id,0,0)
         if rankingJogadores is not None:
             rankingJogadores = list(rankingJogadores)
 

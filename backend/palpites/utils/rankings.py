@@ -2,14 +2,13 @@ from ..models import Palpite_Partida
 from usuarios.models import User, Grupo
 from .score import check_diferenca_gols, check_pontuacao, check_pontuacao_grupo
 
-def ranking(edicao, rodada):
-    
-    if edicao == 0 and rodada == 0:
-        palpites = Palpite_Partida.objects.all() # Pega o ranking de tudo
-    elif edicao != 0 and rodada == 0:
+def ranking(edicao, rodadaInicial, rodadaFinal):
+    if edicao != 0 and rodadaInicial == rodadaFinal == 0:
         palpites = Palpite_Partida.objects.filter(partida__Rodada__edicao_campeonato__id=edicao)
-    elif edicao != 0 and rodada != 0:
-        palpites = Palpite_Partida.objects.filter(partida__Rodada__edicao_campeonato__id=edicao,partida__Rodada__num=rodada)
+    elif edicao != 0 and rodadaInicial == rodadaFinal != 0:
+        palpites = Palpite_Partida.objects.filter(partida__Rodada__edicao_campeonato__id=edicao,partida__Rodada__num=rodadaInicial)
+    elif edicao != 0 and rodadaInicial != 0 and rodadaInicial != rodadaFinal:
+        palpites = Palpite_Partida.objects.filter(partida__Rodada__edicao_campeonato__id=edicao,partida__Rodada__num__gte=rodadaInicial, partida__Rodada__num__lte=rodadaFinal)
 
     pessoas = list(User.objects.order_by('id').filter(id__in=palpites.values_list("usuario", flat=True).distinct()))
     usernames = [pessoa.username for pessoa in pessoas]

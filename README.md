@@ -45,9 +45,12 @@ Caso deseje ver o site em funcionamento, visite: https://pepepepi.pythonanywhere
 ## Instruções de Uso
 
 1. Faça o clone deste repositório para o seu ambiente de desenvolvimento.
-2. Execute o servidor Django com o comando `python manage.py runserver`.
-3. Acesse a aplicação no navegador utilizando o endereço `http://localhost:8000`.
-4. Divirta-se, recomendo que elimine o banco de dados caso vá usar, mas caso queira utilizar este para ver como funciona, o adm tem login e senha: admin
+2. Recomendado criar um ambiente virtual python para rodar o projeto `python -m venv {nome do ambiente}`
+3. Para rodar o ambiente digite `source {nome do ambiente}/bin/activate` para Linux
+4. Dentro do ambiente, instale as bibliotecas necessárias via `pip install -r backend/requirements.txt`
+5. Rode o makemigrations e o migrate `python backend/manage.py makemigrations` e `python backend/manage.py migrate`
+6. Execute o servidor Django com o comando `python backend/manage.py runserver`.
+7. Acesse a aplicação no navegador utilizando o endereço `http://localhost:8000`.
 
 ## Estrutura do Projeto
 
