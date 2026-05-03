@@ -1,9 +1,0 @@
-# Cache do Python
-__pycache__/
-*.py[cod]
-*$py.class
-
-media/Escudos/*
-media/profile_images/*
-!media/profile_images/imagem_inexistente.png
-*.sqlite3

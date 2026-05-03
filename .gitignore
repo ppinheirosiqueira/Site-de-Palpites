@@ -2,3 +2,14 @@ auxiliares/arquivosJson/*
 .venv/
 venv/
 *.css.map
+
+# Do backend
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+backend/media/Escudos/*
+backend/media/profile_images/*
+!backend/media/profile_images/imagem_inexistente.png
+*.sqlite3
