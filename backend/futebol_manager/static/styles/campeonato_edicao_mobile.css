@@ -228,7 +228,8 @@
 }
 
 #ranking {
-  display: none;
+  display: flex;
+  flex-direction: column;
   margin: 0 1%;
   width: 98%;
   border-collapse: collapse;
@@ -272,6 +273,151 @@
   text-decoration: none;
   color: var(--fc);
   font-weight: bold;
+}
+#ranking .filtro {
+  width: 80%;
+  margin: 0 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  font-size: 1.5em;
+  align-items: center;
+}
+#ranking .filtro select {
+  font-size: 0.8em;
+  width: 15em;
+}
+#ranking .filtro .label-toggle {
+  display: flex;
+  gap: 1em;
+}
+#ranking .filtro .filtro-rodada {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+#ranking .filtro .filtro-rodada .select-rodada-wrapper {
+  position: relative;
+  width: 16em;
+  height: 2.5em;
+}
+#ranking .filtro .filtro-rodada .select-rodada-wrapper select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+#ranking .filtro .filtro-rodada .select-rodada-wrapper .faixa-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+#ranking .filtro .faixa-wrapper {
+  align-items: center;
+}
+#ranking .filtro .slider-duplo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  width: 16em;
+}
+#ranking .filtro .slider-duplo .slider-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.75em;
+  font-weight: 700;
+}
+#ranking .filtro .slider-duplo .slider-labels span {
+  width: 50%;
+}
+#ranking .filtro .slider-duplo .slider-labels span:last-child {
+  text-align: right;
+}
+#ranking .filtro .slider-track {
+  position: relative;
+  width: 12em;
+  display: flex;
+  align-items: center;
+}
+#ranking .filtro .slider-track input[type=range] {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+#ranking .filtro .slider-track input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fc);
+  pointer-events: all;
+  cursor: pointer;
+}
+#ranking .filtro .slider-track input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fc);
+  pointer-events: all;
+  cursor: pointer;
+  border: none;
+}
+#ranking .filtro .slider-track .slider-trilha-bg {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+}
+#ranking .filtro .slider-track .slider-trilha-ativa {
+  position: absolute;
+  height: 4px;
+  background: var(--fc);
+  border-radius: 4px;
+  pointer-events: none;
+}
+#ranking .filtro .toggle-faixa {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.75em;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+#ranking .filtro .toggle-faixa input {
+  display: none;
+}
+#ranking .filtro .toggle-faixa .toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 20px;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+#ranking .filtro .toggle-faixa .toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 3px;
+  top: 3px;
+  background: var(--bg);
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+#ranking .filtro .toggle-faixa input:checked + .toggle-slider {
+  background: var(--fc);
+}
+#ranking .filtro .toggle-faixa input:checked + .toggle-slider::before {
+  transform: translateX(16px);
 }
 
 #jogos {
@@ -426,5 +572,3 @@
   left: 0;
   background: var(--bg);
 }
-
-/*# sourceMappingURL=campeonato_edicao_mobile.css.map */

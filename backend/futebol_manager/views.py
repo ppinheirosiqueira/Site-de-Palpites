@@ -144,14 +144,18 @@ def verEdicaoCampeonato(request : HttpRequest, campeonato : int, edicao : int) -
         
     page = paginator.get_page(pagina_atual)
 
+    rodadas = list(Rodada.objects.filter(edicao_campeonato=edicao).order_by('num'))   
+
     contexto = {
         'edicao': edicao,
-        'rodadas': Rodada.objects.filter(edicao_campeonato=edicao).order_by("num"),
+        "rodadas": rodadas,
         'campeao': campeao,
         'ranking': rankingJogadores,
         "page": page,
         "edicoes": edicoes,
         "cravadas": cravadasJogadores,
+        "primeira_rodada": rodadas[0],
+        "ultima_rodada": rodadas[-1]
     }
 
     if edicao.campeonato.pontosCorridos:

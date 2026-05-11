@@ -17,26 +17,20 @@
 .campeonato {
   display: flex;
   margin-inline: 5%;
-}
-.campeonato .left {
-  flex: 1;
-  display: flex;
   flex-direction: column;
-  min-width: 70%;
-  max-width: 80%;
 }
-.campeonato .left #destaque {
+.campeonato #destaque {
   display: flex;
   justify-content: space-evenly;
   gap: 1em;
 }
-.campeonato .left #destaque .palpitarClassificacao {
+.campeonato #destaque .palpitarClassificacao {
   margin: 1em auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.campeonato .left #destaque .palpitarClassificacao a {
+.campeonato #destaque .palpitarClassificacao a {
   color: #000000;
   background-color: #99ff33;
   border-width: 2px;
@@ -45,14 +39,163 @@
   text-decoration: none;
   padding: 8px;
 }
-.campeonato .left #classificacao .filtro {
+.campeonato #ranking-estatisticas {
+  display: flex;
+  justify-content: space-evenly;
+}
+.campeonato #ranking-estatisticas #ranking {
+  width: 70%;
+  flex-shrink: 0;
+}
+.campeonato #ranking-estatisticas #ranking .filtro {
+  width: 80%;
+  margin: 0 10%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 5fr;
+  gap: 2em;
+  font-size: 1.5em;
+  align-items: center;
+}
+.campeonato #ranking-estatisticas #ranking .filtro select {
+  font-size: 0.8em;
+  width: 15em;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .filtro-rodada {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .filtro-rodada .select-rodada-wrapper {
+  position: relative;
+  width: 16em;
+  height: 2.5em;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .filtro-rodada .select-rodada-wrapper select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .filtro-rodada .select-rodada-wrapper .faixa-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .faixa-wrapper {
+  align-items: center;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-duplo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  width: 16em;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-duplo .slider-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.75em;
+  font-weight: 700;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-duplo .slider-labels span {
+  width: 50%;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-duplo .slider-labels span:last-child {
+  text-align: right;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track {
+  position: relative;
+  width: 12em;
+  display: flex;
+  align-items: center;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track input[type=range] {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fc);
+  pointer-events: all;
+  cursor: pointer;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fc);
+  pointer-events: all;
+  cursor: pointer;
+  border: none;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track .slider-trilha-bg {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .slider-track .slider-trilha-ativa {
+  position: absolute;
+  height: 4px;
+  background: var(--fc);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.75em;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa input {
+  display: none;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa .toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 20px;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa .toggle-slider::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 3px;
+  top: 3px;
+  background: var(--bg);
+  border-radius: 50%;
+  transition: transform 0.25s;
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa input:checked + .toggle-slider {
+  background: var(--fc);
+}
+.campeonato #ranking-estatisticas #ranking .filtro .toggle-faixa input:checked + .toggle-slider::before {
+  transform: translateX(16px);
+}
+.campeonato #classificacao .filtro {
   margin: 2% 10%;
   display: flex;
 }
-.campeonato .left #classificacao .filtro input[type=radio] {
+.campeonato #classificacao .filtro input[type=radio] {
   display: none;
 }
-.campeonato .left #classificacao .filtro input[type=radio] + label {
+.campeonato #classificacao .filtro input[type=radio] + label {
   background-color: var(--bg);
   color: var(--fc);
   font-size: 1em;
@@ -67,25 +210,25 @@
   justify-content: center;
   text-align: center;
 }
-.campeonato .left #classificacao .filtro input[type=radio]:checked + label {
+.campeonato #classificacao .filtro input[type=radio]:checked + label {
   background-color: var(--selecionado);
   border-color: var(--bg);
   color: var(--bg);
   cursor: pointer;
 }
-.campeonato .left #classificacao .filtro .selecao {
+.campeonato #classificacao .filtro .selecao {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.campeonato .left #classificacao .filtro .rodadas {
+.campeonato #classificacao .filtro .rodadas {
   display: flex;
   width: 100%;
   margin: 0 10%;
   align-items: center;
   justify-content: space-between;
 }
-.campeonato .left #classificacao .filtro .rodadas select {
+.campeonato #classificacao .filtro .rodadas select {
   width: 20%;
   border-width: 2px;
   border-style: outset;
@@ -95,99 +238,94 @@
   color: var(--fc);
   background-color: var(--bg);
 }
-.campeonato .left #classificacao .classificacao {
+.campeonato #classificacao .classificacao {
   margin: 0 2.5%;
   width: 95%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao {
+.campeonato #classificacao .classificacao .tabelaClassificacao {
   width: 100%;
   border-collapse: collapse;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao .nome {
+.campeonato #classificacao .classificacao .tabelaClassificacao .nome {
   text-align: left;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao th, .campeonato .left #classificacao .classificacao .tabelaClassificacao td {
+.campeonato #classificacao .classificacao .tabelaClassificacao th, .campeonato #classificacao .classificacao .tabelaClassificacao td {
   padding: 8px;
   text-align: center;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao th {
+.campeonato #classificacao .classificacao .tabelaClassificacao th {
   border-bottom: 1px solid var(--border);
   font-size: 2em;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(1), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(1) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(1), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(1) {
   width: 5%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(2), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(2) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(2), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(2) {
   width: 15%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(3), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(3) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(3), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(3) {
   width: 5%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(4), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(4) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(4), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(4) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(5), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(5) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(5), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(5) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(6), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(6) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(6), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(6) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(7), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(7) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(7), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(7) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(8), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(8) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(8), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(8) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(9), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(9) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(9), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(9) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(10), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(10) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(10), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(10) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(11), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(11) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(11), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(11) {
   width: 6.25%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao td:nth-child(12), .campeonato .left #classificacao .classificacao .tabelaClassificacao th:nth-child(12) {
+.campeonato #classificacao .classificacao .tabelaClassificacao td:nth-child(12), .campeonato #classificacao .classificacao .tabelaClassificacao th:nth-child(12) {
   width: 15%;
 }
-.campeonato .left #classificacao .classificacao .tabelaClassificacao tr:nth-child(even) {
+.campeonato #classificacao .classificacao .tabelaClassificacao tr:nth-child(even) {
   background: var(--hover);
 }
-.campeonato .left #palpites {
+.campeonato #palpites {
   display: flex;
   justify-content: space-evenly;
   overflow-x: auto;
 }
-.campeonato .left #palpites .palpites {
+.campeonato #palpites .palpites {
   border-collapse: collapse;
 }
-.campeonato .left #palpites .palpites th, .campeonato .left #palpites .palpites td {
+.campeonato #palpites .palpites th, .campeonato #palpites .palpites td {
   padding: 8px;
   text-align: center;
 }
-.campeonato .left #palpites .palpites th {
+.campeonato #palpites .palpites th {
   border-bottom: 1px solid var(--border);
   font-size: 1.5em;
 }
-.campeonato .left #palpites .palpites td .escudo {
+.campeonato #palpites .palpites td .escudo {
   width: 3em;
 }
-.campeonato .left #palpites .palpites tr {
+.campeonato #palpites .palpites tr {
   height: 3em;
 }
-.campeonato .left #palpites .palpites tr:nth-child(even) {
+.campeonato #palpites .palpites tr:nth-child(even) {
   background: var(--hover);
 }
-.campeonato .left #palpites .palpites .posicao {
+.campeonato #palpites .palpites .posicao {
   position: sticky;
   z-index: 2;
   left: 0;
   background: var(--bg);
-}
-.campeonato .right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 #jogos {
@@ -292,6 +430,10 @@
   font-weight: bold;
 }
 
+#estatisticas {
+  width: 30%;
+  flex-shrink: 0;
+}
 #estatisticas select {
   width: 100%;
   border-width: 2px;
@@ -369,5 +511,3 @@
   align-items: center;
   justify-content: center;
 }
-
-/*# sourceMappingURL=campeonato_edicao_pc.css.map */

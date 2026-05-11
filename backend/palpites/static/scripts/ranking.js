@@ -125,7 +125,13 @@ function mudarCampeonato() {
 }
 
 function fetchRanking() {
-    var edicao = edicaoEscolhida.value
+    var edicao
+    if (edicaoEscolhida){
+        edicao = edicaoEscolhida.value
+    }
+    else{
+        edicao = edicaoId
+    }
     var rodadaInicial, rodadaFinal
 
     if (checkFaixa.checked) {
@@ -138,7 +144,7 @@ function fetchRanking() {
         rodadaFinal   = rodada
     }
 
-    fetch(`ranking/${edicao}/${rodadaInicial}/${rodadaFinal}`)
+    fetch(`/ranking/${edicao}/${rodadaInicial}/${rodadaFinal}`)
         .then(r => r.json())
         .then(exibirDados)
         .catch(e => console.log('Ocorreu um erro:', e))
@@ -175,7 +181,7 @@ function exibirDados(data) {
             else{
                 texto += jogador.posicao + "</td>"
             }
-            texto += "<td><a href=usuario/" + jogador.ids + ">" + jogador.usernames + "</a></td><td>" + jogador.pontosP + "</td><td>" + jogador.difGols + "</td></tr>"
+            texto += "<td><a href=/usuario/" + jogador.ids + ">" + jogador.usernames + "</a></td><td>" + jogador.pontosP + "</td><td>" + jogador.difGols + "</td></tr>"
         })
         resultadoDiv[0].innerHTML = texto + "</tbody>"
     }

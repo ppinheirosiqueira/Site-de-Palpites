@@ -18,136 +18,234 @@
 .campeonato
     display: flex
     margin-inline: 5%
+    flex-direction: column
 
-    .left
-        flex: 1
+    #destaque
         display: flex
-        flex-direction: column
-        min-width: 70%
-        max-width: 80%
+        justify-content: space-evenly
+        gap: 1em
 
-        #destaque
+        .palpitarClassificacao
+            margin: 1em auto
             display: flex
-            justify-content: space-evenly
-            gap: 1em
+            justify-content: center
+            align-items: center
 
-            .palpitarClassificacao
-                margin: 1em auto
-                display: flex
-                justify-content: center
+            a
+                color: #000000
+                background-color: #99ff33 
+                border-width: 2px
+                border-style: outset
+                border-color: #333333
+                text-decoration: none
+                padding: 8px
+
+    #ranking-estatisticas
+        display: flex
+        justify-content: space-evenly
+
+        #ranking
+            width: 70%
+            flex-shrink: 0
+                        
+            .filtro
+                width: 80%
+                margin: 0 10%
+                display: grid
+                grid-template-columns: 1fr 3fr 5fr
+                gap: 2em
+                font-size: 1.5em
                 align-items: center
 
-                a
-                    color: #000000
-                    background-color: #99ff33 
-                    border-width: 2px
-                    border-style: outset
-                    border-color: #333333
-                    text-decoration: none
-                    padding: 8px
-            
-        #classificacao
-            .filtro
-                margin: 2% 10%
-                display: flex
+                select
+                    font-size: 0.8em
+                    width: 15em
 
-                input[type=radio]
-                    display: none
-
-                input[type=radio] + label
-                    background-color: var(--bg)
-                    color: var(--fc)
-                    font-size: 1em
-                    margin: 0 0.5em
-                    padding: 0.2em 0.8em
-                    border-width: 2px
-                    border-style: outset
-                    border-color: var(--border)
-                    cursor: pointer
-                    @include mixins.flex-center
-
-                input[type=radio]:checked + label
-                        background-color: var(--selecionado)
-                        border-color: var(--bg)
-                        color: var(--bg)
-                        cursor: pointer
-
-                .selecao
-                    width: 100%
+                .filtro-rodada
                     display: flex
-                    justify-content: space-between
-
-                .rodadas
-                    display: flex
-                    width: 100%
-                    margin: 0 10%
                     align-items: center
-                    justify-content: space-between
+                    gap: 0.8em
 
-                    select
-                        width: 20%
-                        border-width: 2px
-                        border-style: outset
-                        border-color: var(--border)    
-                        padding: 5px
-                        margin: auto 0
-                        color: var(--fc)
-                        background-color: var(--bg)
+                    .select-rodada-wrapper
+                        position: relative
+                        width: 16em
+                        height: 2.5em
 
-            .classificacao
-                margin: 0 2.5%
-                width: 95%
+                        select
+                            position: absolute
+                            inset: 0
+                            width: 100%
 
-                .tabelaClassificacao
-                    width: 100%
-                    border-collapse: collapse
+                        .faixa-wrapper
+                            position: absolute
+                            inset: 0
+                            width: 100%
 
-                    .nome
-                        text-align: left
+                .faixa-wrapper
+                    align-items: center
 
-                    th, td
-                        padding: 8px
-                        text-align: center
+                .slider-duplo
+                    display: flex
+                    flex-direction: column
+                    align-items: center
+                    gap: 0.3em
+                    width: 16em
 
-                    th 
-                        border-bottom: 1px solid var(--border)
-                        font-size: 2em
+                    .slider-labels
+                        display: flex
+                        justify-content: space-between
+                        width: 100%
+                        font-size: 0.75em
+                        font-weight: 700
 
-                    td:nth-child(1), th:nth-child(1)
-                        width: 5%
-                    td:nth-child(2), th:nth-child(2)
-                        width: 15% 
-                    td:nth-child(3), th:nth-child(3)
-                        width: 5%
-                    td:nth-child(4), th:nth-child(4)
-                        width: 6.25%
-                    td:nth-child(5), th:nth-child(5)
-                        width: 6.25%
-                    td:nth-child(6), th:nth-child(6)
-                        width: 6.25%
-                    td:nth-child(7), th:nth-child(7)
-                        width: 6.25%
-                    td:nth-child(8), th:nth-child(8)
-                        width: 6.25%
-                    td:nth-child(9), th:nth-child(9)
-                        width: 6.25%
-                    td:nth-child(10), th:nth-child(10)
-                        width: 6.25%
-                    td:nth-child(11), th:nth-child(11)
-                        width: 6.25%
-                    td:nth-child(12), th:nth-child(12)
-                        width: 15%
+                        span
+                            width: 50%
+                            &:last-child
+                                text-align: right
 
-                    tr:nth-child(even)
-                        background: var(--hover)
+                .slider-track
+                    position: relative
+                    width: 12em
+                    display: flex
+                    align-items: center
 
-        #palpites
+                    input[type=range]
+                        position: absolute
+                        width: 100%
+                        height: 4px
+                        appearance: none
+                        background: transparent
+                        pointer-events: none
+
+                        &::-webkit-slider-thumb
+                            appearance: none
+                            width: 16px
+                            height: 16px
+                            border-radius: 50%
+                            background: var(--fc)
+                            pointer-events: all
+                            cursor: pointer
+
+                        &::-moz-range-thumb
+                            width: 16px
+                            height: 16px
+                            border-radius: 50%
+                            background: var(--fc)
+                            pointer-events: all
+                            cursor: pointer
+                            border: none
+
+                    .slider-trilha-bg
+                        position: absolute
+                        width: 100%
+                        height: 4px
+                        background: var(--border)
+                        border-radius: 4px
+
+                    .slider-trilha-ativa
+                        position: absolute
+                        height: 4px
+                        background: var(--fc)
+                        border-radius: 4px
+                        pointer-events: none
+
+                .toggle-faixa
+                    display: flex
+                    align-items: center
+                    gap: 0.4em
+                    font-size: 0.75em
+                    cursor: pointer
+                    user-select: none
+                    white-space: nowrap
+
+                    input
+                        display: none
+
+                    .toggle-slider
+                        position: relative
+                        display: inline-block
+                        width: 36px
+                        height: 20px
+                        background: var(--border)
+                        border-radius: 20px
+                        transition: background 0.25s
+                        flex-shrink: 0
+
+                        &::before
+                            content: ""
+                            position: absolute
+                            width: 14px
+                            height: 14px
+                            left: 3px
+                            top: 3px
+                            background: var(--bg)
+                            border-radius: 50%
+                            transition: transform 0.25s
+
+                    input:checked + .toggle-slider
+                        background: var(--fc)
+
+                    input:checked + .toggle-slider::before
+                        transform: translateX(16px)
+
+    #classificacao
+        .filtro
+            margin: 2% 10%
             display: flex
-            justify-content: space-evenly
-            overflow-x: auto
 
-            .palpites
+            input[type=radio]
+                display: none
+
+            input[type=radio] + label
+                background-color: var(--bg)
+                color: var(--fc)
+                font-size: 1em
+                margin: 0 0.5em
+                padding: 0.2em 0.8em
+                border-width: 2px
+                border-style: outset
+                border-color: var(--border)
+                cursor: pointer
+                @include mixins.flex-center
+
+            input[type=radio]:checked + label
+                    background-color: var(--selecionado)
+                    border-color: var(--bg)
+                    color: var(--bg)
+                    cursor: pointer
+
+            .selecao
+                width: 100%
+                display: flex
+                justify-content: space-between
+
+            .rodadas
+                display: flex
+                width: 100%
+                margin: 0 10%
+                align-items: center
+                justify-content: space-between
+
+                select
+                    width: 20%
+                    border-width: 2px
+                    border-style: outset
+                    border-color: var(--border)    
+                    padding: 5px
+                    margin: auto 0
+                    color: var(--fc)
+                    background-color: var(--bg)
+
+        .classificacao
+            margin: 0 2.5%
+            width: 95%
+
+            .tabelaClassificacao
+                width: 100%
                 border-collapse: collapse
+
+                .nome
+                    text-align: left
 
                 th, td
                     padding: 8px
@@ -155,28 +253,67 @@
 
                 th 
                     border-bottom: 1px solid var(--border)
-                    font-size: 1.5em
+                    font-size: 2em
 
-                td 
-                    .escudo
-                        width: 3em
-
-                tr
-                    height: 3em
+                td:nth-child(1), th:nth-child(1)
+                    width: 5%
+                td:nth-child(2), th:nth-child(2)
+                    width: 15% 
+                td:nth-child(3), th:nth-child(3)
+                    width: 5%
+                td:nth-child(4), th:nth-child(4)
+                    width: 6.25%
+                td:nth-child(5), th:nth-child(5)
+                    width: 6.25%
+                td:nth-child(6), th:nth-child(6)
+                    width: 6.25%
+                td:nth-child(7), th:nth-child(7)
+                    width: 6.25%
+                td:nth-child(8), th:nth-child(8)
+                    width: 6.25%
+                td:nth-child(9), th:nth-child(9)
+                    width: 6.25%
+                td:nth-child(10), th:nth-child(10)
+                    width: 6.25%
+                td:nth-child(11), th:nth-child(11)
+                    width: 6.25%
+                td:nth-child(12), th:nth-child(12)
+                    width: 15%
 
                 tr:nth-child(even)
                     background: var(--hover)
 
-                .posicao
-                    position: sticky
-                    z-index: 2
-                    left: 0
-                    background: var(--bg)
-
-    .right
-        flex: 1
+    #palpites
         display: flex
-        flex-direction: column
+        justify-content: space-evenly
+        overflow-x: auto
+
+        .palpites
+            border-collapse: collapse
+
+            th, td
+                padding: 8px
+                text-align: center
+
+            th 
+                border-bottom: 1px solid var(--border)
+                font-size: 1.5em
+
+            td 
+                .escudo
+                    width: 3em
+
+            tr
+                height: 3em
+
+            tr:nth-child(even)
+                background: var(--hover)
+
+            .posicao
+                position: sticky
+                z-index: 2
+                left: 0
+                background: var(--bg)
 
 #jogos
     @include mixins.flex-column
@@ -276,6 +413,8 @@
         font-weight: bold
 
 #estatisticas
+    width: 30%
+    flex-shrink: 0
 
     select
         width: 100%
