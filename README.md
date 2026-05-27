@@ -86,7 +86,7 @@ O site sempre poderá ter melhorias, então vou listar em ordem do que acho lega
 
 ## Bugs conhecidos sem solução
 
-- Algumas vezes ao fazer no login, a pessoa pode cair numa tela de erro 403 - erro CSRF.
+- Algumas vezes ao fazer login, a pessoa pode cair numa tela de erro 403 - erro CSRF.
 
 <p align="center">
 <img src="images/403.png" alt="Bug CSRF" title="Bug CSRF" width="400" />
