@@ -13,3 +13,4 @@ backend/media/Escudos/*
 backend/media/profile_images/*
 !backend/media/profile_images/imagem_inexistente.png
 *.sqlite3
+.vscode/

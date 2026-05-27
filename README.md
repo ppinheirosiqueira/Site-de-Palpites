@@ -86,11 +86,10 @@ O site sempre poderá ter melhorias, então vou listar em ordem do que acho lega
 
 ## Bugs conhecidos sem solução
 
-- Em Iphone's/Ipad's existe um bug na visualização dos jogos, onde os palpites das pessoas vão para baixo, não se sabe ainda a razão.
+- Algumas vezes ao fazer no login, a pessoa pode cair numa tela de erro 403 - erro CSRF.
 
 <p align="center">
-<img src="images/bugIphone.png" alt="Bug Iphone" title="Bug Iphone" width="200" />
-<img src="images/bugIphone.jpg" alt="Bug Iphone" title="Bug Iphone" width="200" />
+<img src="images/403.png" alt="Bug CSRF" title="Bug CSRF" width="400" />
 </p>
 
 ## Contribuição
