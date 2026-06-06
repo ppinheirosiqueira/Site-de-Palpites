@@ -27,6 +27,7 @@ class Pais(models.Model):
 
     class Meta:
         verbose_name_plural = "Países"
+        ordering = ['nome']
 
 class Time(models.Model):
     id = models.AutoField(primary_key=True)
@@ -40,6 +41,7 @@ class Time(models.Model):
     
     class Meta:
         db_table = 'palpites_time'
+        ordering = ['Nome']
     
 class Campeonato(models.Model):
     nome = models.CharField(max_length=100)
@@ -54,6 +56,7 @@ class Campeonato(models.Model):
 
     class Meta:
         db_table = 'palpites_campeonato'
+        ordering = ['nome']
 
 class EdicaoCampeonato(models.Model):
     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE)
@@ -68,6 +71,7 @@ class EdicaoCampeonato(models.Model):
 
     class Meta:
         db_table = 'palpites_edicaocampeonato'
+        ordering = ['campeonato', 'edicao']
 
 class Rodada(models.Model):
     num = models.IntegerField()

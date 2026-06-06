@@ -1,41 +1,77 @@
 {% if message %}
-<h3>{{ message | safe }}</h3>
+    <h3>{{ message | safe }}</h3>
 {% endif %}
+
 <div class="adicionar_time">
     <h2>Registrar Novo Time</h2>
-    <form action="{% url 'register_team' %}" method="post">
+    
+    <form action="{% url 'register_team' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        
         <label for="time">Nome do time:</label><br>
-        <input autofocus type="text" name="time" placeholder="Nome do Time"><br><br>
-        <label for="escudo">Endereço do Escudo:</label><br>
-        <input type="text" name="escudo" placeholder="Escudo do Time"><br><br>
+        <input autofocus type="text" name="time" id="time" placeholder="Nome do Time" required><br><br>
+        
+        <label for="escudo">Escudo do Time:</label><br>
+        <input type="file" name="escudo" id="escudo" accept="image/*" required><br><br>
+
+        <label for="tipo_time">Tipo de Time:</label><br>
+        <select name="tipo_time" id="tipo_time" onchange="alternarCamposPais()">
+            <option value="CL">Clube</option>
+            <option value="SE">Seleção Nacional</option>
+        </select><br><br>
+
+        <div id="secao_novo_pais" style="display: none; padding: 15px; border: 1px solid #ccc; margin-bottom: 20px; border-radius: 5px;">
+            <h3>Dados do Novo País (Seleção)</h3>
+            
+            <label for="nome_pais">Nome do País:</label><br>
+            <input type="text" name="nome_pais" id="nome_pais" placeholder="Ex: Brasil"><br><br>
+
+            <label for="continente">Continente:</label><br>
+            <select name="continente" id="continente">
+                <option value="">Selecione o Continente...</option>
+                {% for continente in continentes %}
+                    <option value="{{ continente.id }}">{{ continente.nome }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="bandeira">Bandeira do País (Opcional):</label><br>
+            <input type="file" name="bandeira" id="bandeira" accept="image/*">
+        </div>
+
         <input type="submit" value="Registrar">
     </form>
 </div>
+
 <div class="formularios">
     <h2>Registrar Times em um Campeonato</h2>
     <form action="{% url 'register_team_tournament' %}" method="post">
         {% csrf_token %}
-        {% for edicao in edicoes %}
+        
+        {% for item in edicoes_data %}
             <div class="container">
-                <input type="checkbox" id="edicao_{{ edicao.id }}" class="checkbox-spoiler">
-                <label for="edicao_{{ edicao.id }}">
-                    {{ edicao }}<span class="indicator"></span>
+                <input type="checkbox" id="edicao_{{ item.edicao.id }}" class="checkbox-spoiler">
+                <label for="edicao_{{ item.edicao.id }}">
+                    {{ item.edicao }}<span class="indicator"></span>
                 </label>
                 <div class="content-spoiler times_checkbox">
-                    {% for time in times %}
-                        <label for="{{edicao.campeonato.id}}_{{edicao.id}}_{{time.id}}">
+                    
+                    {% for time in item.times_elegiveis %}
+                        <label for="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{time.id}}">
                             <input type="checkbox" 
                                     name="times" 
-                                    value="{{edicao.campeonato.id}}_{{edicao.id}}_{{ time.id }}" 
-                                    id="{{edicao.campeonato.id}}_{{edicao.id}}_{{time.id}}" 
-                                    {% if time in edicao.times.all %}checked{% endif %}>
+                                    value="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{ time.id }}" 
+                                    id="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{time.id}}" 
+                                    {% if time in item.times_cadastrados %}checked{% endif %}>
                             {{ time.Nome }}
                         </label>
+                    {% empty %}
+                        <span style="font-size: 0.9em; color: #888;">Nenhum time elegível atende aos critérios deste campeonato.</span>
                     {% endfor %}   
+                    
                 </div>
             </div>
         {% endfor %}
+        
         <input type="submit" value="Registrar">
     </form>
 </div>
