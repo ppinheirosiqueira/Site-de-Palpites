@@ -79,12 +79,10 @@ def get_partidas(request : HttpRequest, pagina : int) -> JsonResponse:
     
     partidas = page.object_list
     serialized_partidas = [partida_to_json(partida) for partida in partidas]
-    serialized_times = serializers.serialize('json', Time.objects.all())
     
     data = {
         'partidas': serialized_partidas,
         'total': page.paginator.num_pages,
-        'times': serialized_times,
     }
     
     return JsonResponse(data)

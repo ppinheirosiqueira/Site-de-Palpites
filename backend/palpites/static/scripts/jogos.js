@@ -28,27 +28,28 @@ function atualizarPaginas(data, pagina){
 
 function exibirPartidas(dados){
     var partidas = dados.partidas;
-    var times = JSON.parse(dados.times)
-    var container = document.getElementsByClassName("container-partidas")[0]
-    var texto = ''
+    var container = document.getElementsByClassName("container-partidas")[0];
+    var texto = '';
+    
     partidas.forEach(function(jogo){
-        texto += '<div class="partida">'
-        texto += '<a href="partida/' + jogo.pk +'">'
-        texto += '<span class="nomeCampeonato">' + jogo.Rodada + '</span>'
-        texto += '<img class="escudo" src="' + times[jogo.Mandante-1].fields.escudo + '" alt="escudo mandante" title="' + times[jogo.Mandante-1].fields.Nome +'">'
-        texto += '<span class="texto">'
+        texto += '<div class="partida">';
+        texto += '<a href="partida/' + jogo.pk +'">';
+        texto += '<span class="nomeCampeonato">' + jogo.Rodada + '</span>';
+        texto += '<img class="escudo" src="/' + jogo.Mandante_escudo + '" alt="escudo mandante" title="' + jogo.Mandante_nome +'">';
+        
+        texto += '<span class="texto">';
         if (jogo.golsMandante > -1 ){
-            texto += jogo.golsMandante
+            texto += jogo.golsMandante;
         }
-        texto += ' X '
+        texto += ' X ';
         if (jogo.golsVisitante > -1 ){
-            texto += jogo.golsVisitante
+            texto += jogo.golsVisitante;
         }
-        texto += '</span>'
-        texto += '<img class="escudo" src="' + times[jogo.Visitante-1].fields.escudo + '" alt="escudo visitante" title="' + times[jogo.Visitante-1].fields.Nome +'">'
-        texto += '</a>'       
-        texto += '</div>'
-    })
+        texto += '</span>';
+        texto += '<img class="escudo" src="/' + jogo.Visitante_escudo + '" alt="escudo visitante" title="' + jogo.Visitante_nome +'">';
+        texto += '</a>';       
+        texto += '</div>';
+    });
 
-    container.innerHTML = texto
+    container.innerHTML = texto;
 }
