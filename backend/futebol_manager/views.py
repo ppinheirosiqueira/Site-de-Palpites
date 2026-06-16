@@ -1,15 +1,16 @@
 from datetime import timedelta
 from collections import defaultdict
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.decorators.http import require_POST
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db.models import Max
 
-from palpites.utils import ranking, rankingUsuariosNoTime, palpite_da_partida, cravadas
+from palpites.utils import ranking, rankingUsuariosNoTime, palpite_da_partida, cravadas, processar_medalhas_rodada
 from .utils import classificacao, get_anterior_proximo_partida
 
 from .models import Partida, Continente, TipoTime, Time, EdicaoCampeonato, Rodada, Campeonato
@@ -204,6 +205,7 @@ def register_team(request : HttpRequest) -> HttpResponse:
         "message": message,
         "edicoes": EdicaoCampeonato.objects.filter(terminou=False),
         "times": Time.objects.all().order_by('Nome'),
+        'continentes': Continente.objects.all(),
     })
 
 def register_tournament(request : HttpRequest) -> HttpResponse:
@@ -288,12 +290,19 @@ def register_matches(request : HttpRequest) -> HttpResponse:
 def finalizarCampeonato(request: HttpRequest, edicao:int) -> HttpRequest:
     campeonato = EdicaoCampeonato.objects.get(id=edicao)
     
-    rankingJogadores = ranking(edicao,0)
+    rodadas = Rodada.objects.filter(edicao_campeonato=campeonato, terminou=False)
+    for rodada in rodadas:
+        rodada.terminou = True
+        rodada.save()
+        processar_medalhas_rodada(rodada)
+
+    rankingJogadores = ranking(edicao,0,0)
     if rankingJogadores is not None:
         rankingJogadores = list(rankingJogadores)
 
     top_pontuacao = [(id, pontosP) for _, _, id, pontosP, _ in list(rankingJogadores)[:3]]
     
+    Medal.objects.filter(edicao_campeonato=campeonato).delete()
     for i, jogador in enumerate(top_pontuacao,1):
         aux = Medal(usuario = User.objects.get(id=jogador[0]), edicao_campeonato = campeonato, nivel = i)
         aux.save()
@@ -303,3 +312,15 @@ def finalizarCampeonato(request: HttpRequest, edicao:int) -> HttpRequest:
     
     url = reverse('edicao', args=(campeonato.campeonato.id,campeonato.num_edicao,))
     return redirect(url)
+
+@staff_member_required
+def finalizar_rodada(request, rodada_id):
+    rodada = get_object_or_404(Rodada, id=rodada_id)
+    rodada.terminou = True
+    rodada.save()
+    processar_medalhas_rodada(rodada)
+    return redirect(reverse('rodada', kwargs={
+        'campeonato': rodada.edicao_campeonato.campeonato.id,
+        'edicao': rodada.edicao_campeonato.num_edicao,
+        'rodada': rodada.num
+    }))

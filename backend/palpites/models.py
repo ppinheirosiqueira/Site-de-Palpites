@@ -1,6 +1,6 @@
 from django.db import models
 from usuarios.models import User
-from futebol_manager.models import Partida, Time, EdicaoCampeonato
+from futebol_manager.models import Partida, Time, EdicaoCampeonato, Rodada
 
 class Palpite_Partida(models.Model):
     usuario = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -34,3 +34,19 @@ class Medal(models.Model):
 
     def __str__(self):
         return f"{self.nivel}º - {self.usuario.username} - {self.edicao_campeonato}"
+
+class MedalhaRodada(models.Model):
+    OURO = 'O'
+    PRATA = 'P'
+    BRONZE = 'B'
+    NIVEIS = [(OURO, 'Ouro'), (PRATA, 'Prata'), (BRONZE, 'Bronze')]
+    
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    rodada = models.ForeignKey(Rodada, on_delete=models.CASCADE)
+    nivel = models.CharField(max_length=1, choices=NIVEIS)
+
+    class Meta:
+        unique_together = ('usuario', 'rodada')
+
+    def __str__(self):
+        return f"{self.get_nivel_display()} - {self.usuario.username} - {self.rodada}"

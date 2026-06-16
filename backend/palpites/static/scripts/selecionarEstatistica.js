@@ -2,7 +2,7 @@ async function selecionarEstatistica(valor){
     var dados = await callEstatistica(valor);
     var tabela  = document.querySelector('#estatisticas .ranking');
 
-    tabela.innerHTML = cabecalho(valor);
+    tabela.innerHTML = cabecalhoEstatistica(valor);
 
     dados.forEach(function(vetor) {
         var linha = document.createElement('tr');
@@ -15,6 +15,9 @@ async function selecionarEstatistica(valor){
         }
         else if (valor == "modaResultados" || valor == "modaPalpites"){
             retorno = moda(vetor);
+        }
+        else if (valor == "medalhasRodadas"){
+            retorno = medalhasRodadas(vetor);
         }
         else{
             retorno = classificacao(vetor);
@@ -45,7 +48,7 @@ async function callEstatistica(item){
         });
 }
 
-function cabecalho(valor){
+function cabecalhoEstatistica(valor){
     if (valor=="cravadas"){
         return `<thead>
                     <tr>
@@ -89,6 +92,19 @@ function cabecalho(valor){
                         <th>Gols Mandante</th>
                         <th>X</th>
                         <th>Gols Visitante</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `
+    }
+    if (valor=="medalhasRodadas"){
+        return `<thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Usuário</th>
+                        <th>🥇</th>
+                        <th>🥈</th>
+                        <th>🥉</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,6 +162,29 @@ function avgPontos(vetor){
     celula4.textContent = vetor[4].toFixed(2);
 
     return [celula1, celula2, celula3, celula4]
+}
+
+function medalhasRodadas(vetor){
+    var celula1 = document.createElement('td');
+    if (vetor[0] <= 3){
+        celula1.appendChild(podio(vetor[0]));
+    } else {
+        celula1.textContent = vetor[0];
+    }
+
+    var celula2 = document.createElement('td');
+    celula2.innerHTML = `<a href="../../usuario/${vetor[1]}">${vetor[2]}</a>`;
+
+    var celula3 = document.createElement('td');
+    celula3.textContent = vetor[3];
+
+    var celula4 = document.createElement('td');
+    celula4.textContent = vetor[4];
+
+    var celula5 = document.createElement('td');
+    celula5.textContent = vetor[5];
+
+    return [celula1, celula2, celula3, celula4, celula5]
 }
 
 function moda(vetor){

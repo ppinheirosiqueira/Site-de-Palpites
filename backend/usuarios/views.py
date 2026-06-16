@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse
 from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_protect
 
 from unidecode import unidecode
 
@@ -18,6 +19,7 @@ from .models import User, Grupo, RodadaModificada
 from palpites.utils import accuracy_user, get_edicoes_usuario, rankingTimesNoPerfil, pontuacao_media, rankingGrupo, cravadas
 
 # Views de Administração de Usuario
+@csrf_protect
 def verLogin(request : HttpRequest) -> HttpResponse:
     if request.method == "POST":
 

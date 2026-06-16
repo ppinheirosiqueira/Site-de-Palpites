@@ -73,6 +73,7 @@ class Rodada(models.Model):
     num = models.IntegerField()
     nome = models.CharField(max_length=100)
     edicao_campeonato = models.ForeignKey(EdicaoCampeonato, on_delete=models.CASCADE)
+    terminou = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.edicao_campeonato.campeonato.nome} - {self.edicao_campeonato.edicao} - {self.nome}"

@@ -142,6 +142,7 @@
                     <select name="seletorEstatisticas" id="seletorEstatisticas" onChange="selecionarEstatistica(value)">
                         <option value="cravadas">Nº Cravadas</option>
                         <option value="avgPontos">Média de Pontos/Jogos</option>
+                        <option value="medalhasRodadas">Medalhas de Rodadas</option>
                         {% if edicao.campeonato.pontosCorridos %}
                         <option value="rankingClassicacao">Ranking pela Classificação</option>
                         {% endif %}
@@ -541,6 +542,7 @@
             <select name="seletorEstatisticas" id="seletorEstatisticas" onChange="selecionarEstatistica(value)">
                 <option value="cravadas">Nº Cravadas</option>
                 <option value="avgPontos">Média de Pontos/Jogos</option>
+                <option value="medalhasRodadas">Medalhas de Rodadas</option>
                 {% if edicao.campeonato.pontosCorridos %}<option value="rankingClassicacao">Ranking pela Classificação</option>{% endif %}
                 <option value="modaPalpites">Palpites Mais Comuns</option>
                 <option value="modaResultados">Resultados Mais Comuns</option>

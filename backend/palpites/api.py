@@ -6,11 +6,11 @@ from django.core import serializers
 from django.core.paginator import Paginator
 
 from futebol_manager.utils import partida_to_json, definirVencedor
-from .utils import ranking, rankingClassicacao, check_pontuacao, palpites_campeonato_to_json, cravadas, avgPontos, modaPalpites
+from .utils import ranking, rankingClassicacao, check_pontuacao, palpites_campeonato_to_json, cravadas, avgPontos, modaPalpites, medalhasRodadas
 
 from futebol_manager.models import Time, Partida, EdicaoCampeonato, Rodada
 from usuarios.models import User, Grupo
-from .models import Palpite_Partida, Palpite_Campeonato
+from .models import Palpite_Partida, Palpite_Campeonato, MedalhaRodada
 
 def attPalpite(request : HttpRequest, idPartida : int, golsMandante : int, golsVisitante : int) -> JsonResponse:
 
@@ -212,3 +212,7 @@ def estatisticaModaPalpites(request : HttpRequest, idEdicao : int, idGrupo:int =
 def estatisticaRankingClassicacao(request : HttpRequest, idEdicao : int, idGrupo:int = None) -> JsonResponse:
     dados_rankingClassicacao = rankingClassicacao(idEdicao, idGrupo)
     return JsonResponse(dados_rankingClassicacao, safe=False)
+
+def estatisticaMedalhasRodadas(request : HttpRequest, idEdicao : int, idGrupo:int = None) -> JsonResponse:
+    dados_medalhasRodadas = medalhasRodadas(idEdicao, idGrupo)
+    return JsonResponse(dados_medalhasRodadas, safe=False)

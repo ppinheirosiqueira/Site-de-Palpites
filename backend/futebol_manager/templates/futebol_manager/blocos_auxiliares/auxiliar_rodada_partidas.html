@@ -5,6 +5,18 @@
         <span></span>
     {% endif %}
         <h2><a href="{% url 'edicao' campeonato=rodada.edicao_campeonato.campeonato.id edicao=edicao.num_edicao %}">{{ rodada.edicao_campeonato }}</a> - {{ rodada.nome }}</h2>
+        {% if user.is_staff %}
+            {% if rodada.terminou %}
+                <span class="rodada-status finalizada">✓ Finalizada</span>
+                <a href="{% url 'finalizar_rodada' rodada_id=rodada.id %}">
+                    <button type="button" class="btn-reprocessar">↺ Reprocessar Medalhas</button>
+                </a>
+            {% else %}
+                <a href="{% url 'finalizar_rodada' rodada_id=rodada.id %}">
+                    <button type="button" class="btn-finalizar">Finalizar Rodada</button>
+                </a>
+            {% endif %}
+        {% endif %}
     {% if proxima != None %}
         <a href="{% url 'rodada' campeonato=proxima.edicao_campeonato.campeonato.id edicao=edicao.num_edicao rodada=proxima.num %}"><button type="button" class="arrow-button right-arrow">&#8594;</button></a>
     {% else %}

@@ -7,8 +7,8 @@ from futebol_manager.utils import auxRankingClassificacao
 from .score import check_pontuacao, check_diferenca_gols
 
 from usuarios.models import User, Grupo
-from futebol_manager.models import EdicaoCampeonato
-from ..models import Palpite_Partida, Palpite_Campeonato
+from futebol_manager.models import EdicaoCampeonato, Rodada
+from ..models import Palpite_Partida, Palpite_Campeonato, MedalhaRodada
 
 def get_edicoes_usuario(id:int) -> list:
     palpites = Palpite_Partida.objects.filter(usuario=id)
@@ -118,3 +118,36 @@ def modaPalpites(edicao, grupo):
         jogos = jogos.filter(usuario__in = list(Grupo.objects.get(id=grupo).usuarios.all()))
     resultados_mais_comuns = jogos.values('golsMandante', 'golsVisitante').annotate(ocorrencias=Count('id')).order_by('-ocorrencias')
     return [[item['ocorrencias'] ,item['golsMandante'], item['golsVisitante']] for item in resultados_mais_comuns]
+
+def medalhasRodadas(edicao, grupo):
+    from palpites.models import MedalhaRodada
+    medalhas = MedalhaRodada.objects.filter(
+        rodada__edicao_campeonato__id=edicao
+    ).select_related('usuario')
+
+    if grupo:
+        medalhas = medalhas.filter(usuario__in=list(Grupo.objects.get(id=grupo).usuarios.all()))
+
+    contagem = {}
+    for medalha in medalhas:
+        uid = medalha.usuario.id
+        if uid not in contagem:
+            contagem[uid] = {'id': uid, 'username': medalha.usuario.username, 'ouro': 0, 'prata': 0, 'bronze': 0}
+        if medalha.nivel == MedalhaRodada.OURO:
+            contagem[uid]['ouro'] += 1
+        elif medalha.nivel == MedalhaRodada.PRATA:
+            contagem[uid]['prata'] += 1
+        elif medalha.nivel == MedalhaRodada.BRONZE:
+            contagem[uid]['bronze'] += 1
+
+    ordenado = sorted(contagem.values(), key=lambda x: (-x['ouro'], -x['prata'], -x['bronze']))
+
+    dados = []
+    anterior = None
+    for i, item in enumerate(ordenado, 1):
+        chave = (item['ouro'], item['prata'], item['bronze'])
+        ranking_display = '-' if anterior == chave else i
+        anterior = chave
+        dados.append((ranking_display, item['id'], item['username'], item['ouro'], item['prata'], item['bronze']))
+
+    return dados

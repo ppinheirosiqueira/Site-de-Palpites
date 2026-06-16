@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Palpite_Partida)
 admin.site.register(Palpite_Campeonato)
 admin.site.register(Medal)
+admin.site.register(MedalhaRodada)

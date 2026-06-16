@@ -38,6 +38,7 @@ urlpatterns = [
     path("estatistica/<int:idEdicao>/avgPontos", api.estatisticaAvgPontos, name="estatisticaAvgPontos"),
     path("estatistica/<int:idEdicao>/modaPalpites", api.estatisticaModaPalpites, name="estatisticaModaPalpites"),
     path("estatistica/<int:idEdicao>/rankingClassicacao", api.estatisticaRankingClassicacao, name="estatisticaRankingClassicacao"),
+    path("estatistica/<int:idEdicao>/medalhasRodadas", api.estatisticaMedalhasRodadas, name="estatisticaMedalhasRodadas"),
 
     # ============== Campeonatos - Filtro de Grupo ==============
     path("pegarPalpite/<int:idCampeonato>/<int:idGrupo>", api.pegarPalpite, name="pegarPalpitesGrupo"),
@@ -45,6 +46,7 @@ urlpatterns = [
     path("estatistica/<int:idEdicao>/avgPontos/<int:idGrupo>", api.estatisticaAvgPontos, name="estatisticaAvgPontos"),
     path("estatistica/<int:idEdicao>/modaPalpites/<int:idGrupo>", api.estatisticaModaPalpites, name="estatisticaModaPalpites"),
     path("estatistica/<int:idEdicao>/rankingClassicacao/<int:idGrupo>", api.estatisticaRankingClassicacao, name="estatisticaRankingClassicacao"),
+    path("estatistica/<int:idEdicao>/medalhasRodadas/<int:idGrupo>", api.estatisticaMedalhasRodadas, name="estatisticaMedalhasRodadas"),
 
     # ============== Partidas ==============
     path("attPalpite/<int:idPartida>/<int:golsMandante>/<int:golsVisitante>", api.attPalpite, name="attPalpite"),

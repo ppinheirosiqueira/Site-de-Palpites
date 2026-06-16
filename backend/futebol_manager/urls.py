@@ -23,6 +23,9 @@ urlpatterns = [
     path("atualizar_partida", views.editarPartida, name="change_match"),
     path("registrar_partidas", views.register_matches, name="register_matches"),
 
+    # ============== Rodadas ==============
+    path("finalizar_rodada/<int:rodada_id>", views.finalizar_rodada, name="finalizar_rodada"),
+
 # =====================================================================================================================
 # =============================================== URL de APIs =========================================================
 # =====================================================================================================================
