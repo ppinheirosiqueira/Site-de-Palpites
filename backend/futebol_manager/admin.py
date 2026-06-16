@@ -5,7 +5,10 @@ from .models import *
 admin.site.register(Time)
 admin.site.register(Partida)
 admin.site.register(Campeonato)
-admin.site.register(EdicaoCampeonato)
 admin.site.register(Rodada)
 admin.site.register(Pais)
 admin.site.register(Continente)
+
+@admin.register(EdicaoCampeonato)
+class TimesNaEdicao(admin.ModelAdmin):
+    filter_horizontal = ['times']

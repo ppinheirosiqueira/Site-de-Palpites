@@ -1,15 +1,55 @@
 {% if message %}
-<h3>{{ message | safe }}</h3>
+    <h3>{{ message | safe }}</h3>
 {% endif %}
+
 <div class="adicionar_time">
     <h2>Registrar Campeonato</h2>
     <form action="{% url 'register_tournament' %}" method="post">
         {% csrf_token %}
+        
         <label for="campeonato">Nome do Campeonato:</label><br>
-        <input autofocus type="text" name="campeonato" placeholder="Nome do Campeonato"><br><br>
+        <input autofocus type="text" name="campeonato" id="campeonato" placeholder="Nome do Campeonato" required><br><br>
+        
+        <label for="tipo_time_aceito">Tipo de Time Aceito:</label><br>
+        <select name="tipo_time_aceito" id="tipo_time_aceito" required>
+            <option value="CL">Clube</option>
+            <option value="SE">Seleção Nacional</option>
+            <option value="AM">Ambos</option>
+        </select><br><br>
+
+        <label for="escopo">Escopo do Campeonato:</label><br>
+        <select name="escopo" id="escopo" onchange="alternarCamposGeograficos()" required>
+            <option value="NAC">Nacional</option>
+            <option value="CON">Continental</option>
+            <option value="MUN">Mundial</option>
+        </select><br><br>
+
+        <div id="secao_pais" style="display: block;">
+            <label for="pais">País do Campeonato:</label><br>
+            <select name="pais" id="pais">
+                <option value="">Selecione o País...</option>
+                {% for p in paises %}
+                    <option value="{{ p.id }}">{{ p.nome }}</option>
+                {% endfor %}
+            </select><br><br>
+        </div>
+
+        <div id="secao_continente" style="display: none;">
+            <label for="continente">Continente do Campeonato:</label><br>
+            <select name="continente" id="continente">
+                <option value="">Selecione o Continente...</option>
+                {% for c in continentes %}
+                    <option value="{{ c.id }}">{{ c.nome }}</option>
+                {% endfor %}
+            </select><br><br>
+        </div>
+
         <label for="edicao">Nome da Edição:</label><br>
-        <input type="text" name="edicao" placeholder="Edição do Campeonato"><br><br>
-        <input type="checkbox" name="pontosCorridos" checked><label for="pontosCorridos">Pontos Corridos</label><br><br>
+        <input type="text" name="edicao" id="edicao" placeholder="Ex: 2026" required><br><br>
+        
+        <input type="checkbox" name="pontosCorridos" id="pontosCorridos" checked>
+        <label for="pontosCorridos">Pontos Corridos</label><br><br>
+        
         <input type="submit" value="Registrar">
     </form>
 </div>

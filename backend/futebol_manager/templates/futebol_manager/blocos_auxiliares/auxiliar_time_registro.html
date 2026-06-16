@@ -45,5 +45,37 @@
 <div class="formularios">
     <h2>Registrar Times em um Campeonato</h2>
     <form action="{% url 'register_team_tournament' %}" method="post">
+<<<<<<< HEAD
         </form>
+=======
+        {% csrf_token %}
+        
+        {% for item in edicoes_data %}
+            <div class="container">
+                <input type="checkbox" id="edicao_{{ item.edicao.id }}" class="checkbox-spoiler">
+                <label for="edicao_{{ item.edicao.id }}">
+                    {{ item.edicao }}<span class="indicator"></span>
+                </label>
+                <div class="content-spoiler times_checkbox">
+                    
+                    {% for time in item.times_elegiveis %}
+                        <label for="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{time.id}}">
+                            <input type="checkbox" 
+                                    name="times" 
+                                    value="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{ time.id }}" 
+                                    id="{{item.edicao.campeonato.id}}_{{item.edicao.id}}_{{time.id}}" 
+                                    {% if time in item.times_cadastrados %}checked{% endif %}>
+                            {{ time.Nome }}
+                        </label>
+                    {% empty %}
+                        <span style="font-size: 0.9em; color: #888;">Nenhum time elegível atende aos critérios deste campeonato.</span>
+                    {% endfor %}   
+                    
+                </div>
+            </div>
+        {% endfor %}
+        
+        <input type="submit" value="Registrar">
+    </form>
+>>>>>>> 6da56422324bd11f56f6c92b113db710a2faca4d
 </div>

@@ -9,11 +9,13 @@ from django.urls import reverse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db.models import Max
+from django.core.files.storage import FileSystemStorage
+from django.db.models import Q
 
 from palpites.utils import ranking, rankingUsuariosNoTime, palpite_da_partida, cravadas, processar_medalhas_rodada
 from .utils import classificacao, get_anterior_proximo_partida
 
-from .models import Partida, Continente, TipoTime, Time, EdicaoCampeonato, Rodada, Campeonato
+from .models import Partida, Continente, TipoTime, Time, EdicaoCampeonato, Rodada, Campeonato, Pais, EscopoCampeonato
 from usuarios.models import User
 from palpites.models import Palpite_Partida, Palpite_Campeonato, Medal
 
@@ -192,35 +194,142 @@ def verRodada(request : HttpRequest, campeonato : int, edicao : int, rodada : in
     })
 
 # Views de Administração
-def register_team(request : HttpRequest) -> HttpResponse:
+def register_team(request: HttpRequest) -> HttpResponse:
     message = ""
     if request.method == "POST":
-        nome = request.POST["time"]
-        escudo = request.POST["escudo"]
-        aux = Time(Nome=nome,escudo='media/Escudos/' + escudo)
+        nome = request.POST.get("time")
+        tipo_time = request.POST.get("tipo_time", TipoTime.CLUBE)
+        pais_obj = None
+
+        # 1. Processamento do Escudo (Upload de Arquivo)
+        escudo_file = request.FILES.get("escudo")
+        escudo_path = ""
+        if escudo_file:
+            fs = FileSystemStorage(location='media/Escudos/')
+            filename = fs.save(escudo_file.name, escudo_file)
+            escudo_path = 'media/Escudos/' + filename
+
+        # 2. Lógica para criação de País caso seja Seleção
+        if tipo_time == TipoTime.SELECAO:
+            nome_pais = request.POST.get("nome_pais")
+            continente_id = request.POST.get("continente")
+            bandeira_file = request.FILES.get("bandeira")
+
+            if nome_pais and continente_id:
+                continente_obj = Continente.objects.get(id=continente_id)
+                bandeira_path = ""
+                
+                # Upload da Bandeira (Opcional)
+                if bandeira_file:
+                    fs_bandeira = FileSystemStorage(location='media/Bandeiras/')
+                    filename_bandeira = fs_bandeira.save(bandeira_file.name, bandeira_file)
+                    bandeira_path = 'media/Bandeiras/' + filename_bandeira
+
+                # get_or_create impede que o código quebre se o usuário tentar 
+                # registrar uma seleção de um país que já foi criado antes
+                pais_obj, created = Pais.objects.get_or_create(
+                    nome=nome_pais,
+                    defaults={
+                        'continente': continente_obj,
+                        'bandeira': bandeira_path
+                    }
+                )
+
+        # 3. Criação do Time
+        aux = Time(
+            Nome=nome,
+            escudo=escudo_path,
+            tipo=tipo_time,
+            pais=pais_obj
+        )
         aux.save()
-        message = f'{nome} registrado com sucesso'
+        message = f'{nome} registrado com sucesso!'
+
+    edicoes_ativas = EdicaoCampeonato.objects.filter(terminou=False).prefetch_related('campeonato', 'times')
+    edicoes_data = []
+
+    for edicao in edicoes_ativas:
+        campeonato = edicao.campeonato
+        filtros = Q()
+        
+        # Filtro de Tipo de Time
+        if campeonato.tipo_time_aceito != TipoTime.AMBOS:
+            filtros &= Q(tipo=campeonato.tipo_time_aceito)
+        
+        # Filtros Geográficos
+        if campeonato.escopo == EscopoCampeonato.NACIONAL:
+            filtros &= Q(pais=campeonato.pais)
+        elif campeonato.escopo == EscopoCampeonato.CONTINENTAL:
+            filtros &= Q(pais__continente=campeonato.continente)
+            
+        # Busca os times elegíveis e os times que já estão cadastrados na edição
+        times_elegiveis = Time.objects.filter(filtros).order_by('Nome')
+        times_cadastrados = edicao.times.all()
+        
+        edicoes_data.append({
+            'edicao': edicao,
+            'times_elegiveis': times_elegiveis,
+            'times_cadastrados': times_cadastrados
+        })
+
     return render(request, "futebol_manager/register_team.html", {
         "title": "Registrar Time",
         "message": message,
         "edicoes": EdicaoCampeonato.objects.filter(terminou=False),
         "times": Time.objects.all().order_by('Nome'),
-        'continentes': Continente.objects.all(),
+        "continentes": Continente.objects.all(),
+        "edicoes_data": edicoes_data,
     })
 
-def register_tournament(request : HttpRequest) -> HttpResponse:
+def register_tournament(request: HttpRequest) -> HttpResponse:
     message = ""
     if request.method == "POST":
-        pontosCorridos = True if request.POST["pontosCorridos"] == "on" else False
-        campeonato = Campeonato.objects.get_or_create(nome=request.POST["campeonato"],pontosCorridos=pontosCorridos)[0]
+        nome_campeonato = request.POST.get("campeonato")
+        edicao_nome = request.POST.get("edicao")
+        pontosCorridos = request.POST.get("pontosCorridos") == "on"
+        
+        # Coleta os novos campos
+        tipo_time = request.POST.get("tipo_time_aceito", TipoTime.CLUBE)
+        escopo = request.POST.get("escopo", EscopoCampeonato.NACIONAL)
+        
+        pais_id = request.POST.get("pais")
+        continente_id = request.POST.get("continente")
+        
+        # Busca instâncias apenas se um ID foi fornecido
+        pais_obj = Pais.objects.get(id=pais_id) if pais_id else None
+        continente_obj = Continente.objects.get(id=continente_id) if continente_id else None
+
+        # get_or_create usando defaults para os novos campos
+        # Assim, se o campeonato for novo, ele insere tudo. Se já existir, ele usa o que está no banco.
+        campeonato, created = Campeonato.objects.get_or_create(
+            nome=nome_campeonato,
+            defaults={
+                'pontosCorridos': pontosCorridos,
+                'tipo_time_aceito': tipo_time,
+                'escopo': escopo,
+                'pais': pais_obj,
+                'continente': continente_obj
+            }
+        )
+
         maiorNum = EdicaoCampeonato.objects.filter(campeonato=campeonato).aggregate(Max('num_edicao'))['num_edicao__max']
         if maiorNum is None:
             maiorNum = 0
-        edicao = EdicaoCampeonato.objects.get_or_create(campeonato=campeonato,edicao=request.POST["edicao"],num_edicao=maiorNum+1)[0]
-        message = f"{campeonato.nome} - {edicao.edicao} criado com Sucesso"
-    return render(request, "futebol_manager/register_tournament.html",{
+            
+        edicao, edicao_created = EdicaoCampeonato.objects.get_or_create(
+            campeonato=campeonato,
+            edicao=edicao_nome,
+            defaults={'num_edicao': maiorNum + 1}
+        )
+        
+        message = f"{campeonato.nome} - {edicao.edicao} registrado com sucesso!"
+
+    # Passamos continentes e países para popular os selects no HTML
+    return render(request, "futebol_manager/register_tournament.html", {
         "message": message,
         "title": "Registrar Torneio",
+        "continentes": Continente.objects.all().order_by('nome'),
+        "paises": Pais.objects.all().order_by('nome'),
     })
 
 @require_POST
