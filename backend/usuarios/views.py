@@ -167,7 +167,7 @@ def verGrupo(request: HttpRequest, id:int) -> HttpResponse:
         'cravadas': cravadasJogadores,
         'campeao': campeao,
         'rodadas': rodadas,
-        'rodadasModificadas': RodadaModificada.objects.filter(rodada__in=rodadas),
+        'rodadasModificadas': RodadaModificada.objects.filter(grupo=grupo,rodada__in=rodadas),
         'userList': json.dumps(list(User.objects.all().exclude(id__in=grupo.usuarios.all()).values_list("username",flat=True))),
     })
 

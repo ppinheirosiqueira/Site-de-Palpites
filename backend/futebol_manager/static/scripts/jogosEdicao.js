@@ -33,8 +33,8 @@ function exibirPartidas(dados){
     
     partidas.forEach(function(jogo){
         texto += '<div class="partida">';
-        texto += '<a href="partida/' + jogo.pk +'">';
-        texto += '<span class="nomeCampeonato">' + jogo.Rodada + '</span>';
+        texto += '<a href="/partida/-' + edicaoId + "/" + jogo.pk +'">';
+        texto += '<span class="texto nomeCampeonato">' + jogo.Rodada + '</span>';
         texto += '<img class="escudo" src="/' + jogo.Mandante_escudo + '" alt="escudo mandante" title="' + jogo.Mandante_nome +'">';
         
         texto += '<span class="texto">';

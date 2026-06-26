@@ -60,3 +60,5 @@ class RodadaModificada(models.Model):
         unique_together = ('grupo', 'rodada')
         db_table = 'palpites_rodadamodificada'
     
+    def __str__(self):
+        return f"{self.grupo} - {self.rodada}"

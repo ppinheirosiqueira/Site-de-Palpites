@@ -41,6 +41,20 @@ def check_diferenca_gols(palpites):
 
     return pontuacao_usuario or 0
 
+def check_diferenca_gols_grupo(palpites, grupo):
+    rodadas_com_palpites = Rodada.objects.filter(partida__palpite_partida__in=palpites).distinct()
+    soma = 0
+    for rodada in rodadas_com_palpites:
+        rodada_modificada = RodadaModificada.objects.filter(rodada=rodada, grupo=grupo).first()
+        palpites_rodada = palpites.filter(partida__Rodada=rodada)
+        
+        if rodada_modificada:
+            soma += check_diferenca_gols(palpites_rodada) * rodada_modificada.modificador
+        else:
+            soma += check_diferenca_gols(palpites_rodada)
+
+    return soma
+
 def check_diferenca_gols_individual(palpite):
     """Retorna a diferença de gols de um único palpite em relação ao resultado real."""
     if palpite.partida.golsMandante == -1:
